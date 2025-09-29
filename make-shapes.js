@@ -68,7 +68,8 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
         
         const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
           style: {
-            stroke: `hsla(${hueRotate * 2}, 100%, 75%, ${0.4})`,
+            // stroke: `hsla(${hueRotate * 2}, 100%, 75%, ${0.4})`,
+            // stroke: `hsla(0, 100%, 100%, ${0.4})`,
             fill: `hsla(${hueRotate - rand}, 100%, 50%, ${opacity})`,
             // fill: background,
             transform,
@@ -171,7 +172,7 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
         
         const circ = getSVGTemplate(svgCanvas, 'basic-rect', {
           style: {
-            stroke: `hsla(${hueRotate*2}, 100%, 50%, ${0.35})`,
+            // stroke: `hsla(${hueRotate*2}, 100%, 50%, ${0.35})`,
             fill: `hsla(${hueRotate}, 100%, 50%, ${opacity})`,
             // filter: `contrast(1.2)`,
             filter: `drop-shadow(0 0 5px #00000030)`,

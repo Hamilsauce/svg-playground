@@ -80,6 +80,13 @@ button:hover {
   background: #666;
 }
 
+button a {
+  text-decoration: none;
+  color: #F4F4F4;
+  font-weight: 700;
+  font-size: 18px;
+}
+
 #compositePath {
   stroke: #D11F1FCC;
   filter: opacity(0.8);

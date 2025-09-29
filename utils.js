@@ -38,17 +38,17 @@ export const initCalculateFPS = (smoothingWindowSize = 30) => {
   let lastTime = 0;
   
   
-  return (timestamp) => {
-    const delta = (timestamp - lastTime) / 1000;
-    lastTime = timestamp;
-    
+  return (delta) => {
+    const deltaSecs = (delta / 1000)
+    // lastTime = timestamp;
+    console.warn('delta', delta)
     frameTimes.push(delta);
-
+    
     if (frameTimes.length > smoothingWindowSize) frameTimes.shift(); // keep last 30 frames
     
     const avgDelta = frameTimes.reduce((a, b) => a + b) / frameTimes.length;
-    fps = Math.round(1 / avgDelta);
-    
+    fps = Math.round(avgDelta);
+    // console.warn('avgDelta', avgDelta)    
     return fps;
   }
 };

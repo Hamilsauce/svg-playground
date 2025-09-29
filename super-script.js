@@ -97,12 +97,19 @@ makeRects.start()
 // animate();
 
 // --- Interactive rotation using atan2
+svg.addEventListener('dblclick', async (e) => {
+  
+  const svgHTML = svg.outerHTML;
+  // console.warn({ svgHTML })
+  await navigator.clipboard.writeText(svgHTML)
+});
+
 svg.addEventListener('click', e => {
-  console.warn('makeRects.isRunning', makeRects.isRunning)
+  // console.warn('makeRects.isRunning', makeRects.isRunning)
   // makeRects.isRunning = !makeRects.isRunning
   // makeRects.stop()
   animState.isRunning = !animState.isRunning
-  console.warn('animState.isRunning', animState.isRunning)
+  // console.warn('animState.isRunning', animState.isRunning)
   
   if (makeRects.isRunning) {
     
