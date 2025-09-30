@@ -1,4 +1,4 @@
-import { circleMaker, rectMaker, animState } from './make-shapes.js';
+import { circleMaker, rectMaker, animState, initMakeShapes } from './make-shapes.js';
 import ham from 'https://hamilsauce.github.io/hamhelper/hamhelper1.0.0.js';
 
 const { template, getPanZoom } = ham;
@@ -16,6 +16,7 @@ const compositeDot = document.getElementById("compositeDot");
 const compositePath = document.getElementById("compositePath");
 
 getPanZoom(svg)
+const makeShapes = initMakeShapes(shapeContainer)
 const makecircles = circleMaker(shapeContainer)
 const makeRects = rectMaker(shapeContainer)
 
@@ -92,8 +93,12 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-makecircles()
-makeRects.start()
+console.warn('makeShapes', makeShapes)
+makeShapes()
+
+// makecircles()
+// makeRects.start()
+
 // animate();
 
 // --- Interactive rotation using atan2

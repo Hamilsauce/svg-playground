@@ -11,8 +11,7 @@ export const animState = {
   isRunning: false,
 }
 
-// console.warn('performance', JSON.stringify(performance.getEntries(), null, 2))
-export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
+export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let hueRotate = 0;
   let angle = 0;
   let t = 0;
@@ -32,20 +31,16 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
   let lastTime = 0;
   
   const createCircle = (timestamp = 0) => {
-    // if (!animState.isRunning) return;
     const delta = (timestamp - lastTime);
     
-    if (animState.isRunning && delta > 48) {
+    if (animState.isRunning && delta > 24) {
       
       lastTime = timestamp;
-      
-      // const fps = calcFPS(delta)
       const fps = frameRate(delta)
       fpsDisplay.textContent = `fps: ${fps}`
       angle += angleStep;
       t += tStep;
       hueRotate++
-      
       
       opacityStep = opacity > 0.6 || opacity <= 0.1 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
@@ -56,30 +51,19 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
-      if (circles.length <= 200) {
+      if (circles.length <= 150) {
         const rand = Math.random() * 10
-        
-        
-        
         const orbitX = cx + 100 * Math.cos(angle);
         const orbitY = cy + 100 * Math.sin(angle);
         const { background, transform } = getGradient()
         
-        
-        svgCanvas.style.background = background
-        
-        
+        // svgCanvas.style.background = background
         
         const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
           style: {
-            // stroke: `hsla(${hueRotate * 2}, 100%, 75%, ${0.4})`,
-            // stroke: `hsla(0, 100%, 100%, ${0.4})`,
             fill: `hsla(${hueRotate - rand}, 100%, 50%, ${opacity})`,
-            // fill: background,
             transform,
-            // filter: `opacity(${opacity})`,
             filter: `opacity(${opacity}) drop-shadow(0 0 2px #00000025)`,
-            
           },
           attrs: {
             transform: `translate(${orbitX},${orbitY}) `,
@@ -89,27 +73,20 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
         
         svgEl.append(circ)
         circles.push(circ)
-        
-      } else if (circles.length >= 200) {
-        
+      } else if (circles.length >= 150) {
         circles.shift().remove();
-        
       }
-      
     }
     
-    svgCanvas.style.filter = `hue-rotate(${hueRotate-hueRotate-1}deg)`
-    rafID = requestAnimationFrame(createCircle);
+    // svgCanvas.style.filter = `hue-rotate(${hueRotate-hueRotate-1}deg)`
+    // rafID = requestAnimationFrame(createCircle);
     
   }
-  return createCircle
-  // return () => {
-  //   rafID=null
-  //   // cancelAnimationFrame(rafID)
-  // };
+  
+  return createCircle;
 }
 
-export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
+export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let rafID = null;
   let isRunning = false;
   let hueRotate = 180;
@@ -122,8 +99,11 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
   let opacityStep = 0.0075;
   let orbitStep = 2;
   
+  let borderRadius = 1
+  let borderRadiusStep = 0.5
+  
   let opacity = 0.6;
-  let circles = [];
+  let rects = [];
   let circleCounter = 0;
   let rotoMod = 2
   const svgCanvas = svgEl.closest('svg')
@@ -131,91 +111,65 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
   
   
   const createRect = (timestamp) => {
-    
     const delta = (timestamp - lastTime);
     
-    if (animState.isRunning && delta > 48) {
-      
-      console.warn(isRunning)
-      // if (!isRunning) return
-      
-      // const fps = calcFPS(timestamp)
-      // console.warn('fps', fps)
-      // fpsDisplay.textContent = fps
+    if (animState.isRunning && delta > 24) {
       angle -= angleStep;
       t += tStep;
       hueRotate++
-      // opacity = opacity >= 1 ? 0 : opacity + 0.001
-      // opacity = opacity <= 0 ? 0.8 : opacity - 0.005
-      
-      
-      // if (radius > 80 || radius <= 40) {
-      //   radiusStep = -radiusStep
-      // }
-      
-      // radius = radius + radiusStep;
-      // radius = radius > 90 ? radiusStep : radius + radiusStep;
       
       opacityStep = opacity > 0.6 || opacity <= 0.1 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
+      
       radiusStep = radius > 60 || radius <= 40 ? -radiusStep : radiusStep;
       radius = radius + radiusStep;
       
-      
       rotoMod = rotoMod === 2 ? 6 : 2
       
+      borderRadiusStep = borderRadius >= 20 || borderRadius <= 0 ? -borderRadiusStep : borderRadiusStep;
+      borderRadius = borderRadius + borderRadiusStep;
       orbitStep = cx >= 250 || cx <= 100 ? -orbitStep : orbitStep;
+      
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
-      
-      if (circles.length <= 200) {
+      if (rects.length <= 150) {
         const orbitX = cx + 100 * Math.cos(angle);
         const orbitY = cy + 100 * Math.sin(angle);
         
-        const circ = getSVGTemplate(svgCanvas, 'basic-rect', {
+        const rect = getSVGTemplate(svgCanvas, 'basic-rect', {
           style: {
-            // stroke: `hsla(${hueRotate*2}, 100%, 50%, ${0.35})`,
             fill: `hsla(${hueRotate}, 100%, 50%, ${opacity})`,
-            // filter: `contrast(1.2)`,
             filter: `drop-shadow(0 0 5px #00000030)`,
-            
+            rx: borderRadius,
+            ry: borderRadius,
           },
           attrs: {
             width: radius,
             height: radius,
             transform: `translate(${orbitX},${orbitY}) rotate(${hueRotate*rotoMod})`,
-            // r: radius,
+            // transform: `translate(${orbitX},${orbitY}) rotate(${hueRotate*rotoMod})`,
+            rx: borderRadius,
+            ry: borderRadius,
+            
           }
         });
         
-        // circ.setAttribute('cx', orbitX);
-        // circ.setAttribute('cy', orbitY);
-        // circ.setAttribute('transform', `translate(${orbitX},${orbitY})`);
-        // svgCanvas.append(circ)
-        svgEl.append(circ)
-        circles.push(circ)
-        
+        svgEl.append(rect)
+        rects.push(rect)
       } else {
-        
-        circles.shift().remove();
-        
+        rects.shift().remove();
       }
-      lastTime = timestamp;
       
+      lastTime = timestamp;
     }
     
-    // if (isRunning) {
-    rafID = requestAnimationFrame(createRect);
-    
-    // } else {
-    //   cancelAnimationFrame(rafID)
-    //   rafID = null;
-    // }
+    // rafID = requestAnimationFrame(createRect);
   }
   
+  return createRect
+  
   return {
-    // start: createRect,
     start() {
       isRunning = true
       console.warn('rafID', rafID)
@@ -226,13 +180,31 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
     },
     stop() {
       if (rafID !== null) {
-        
-        // isRunning = false // !isRunning
         cancelAnimationFrame(rafID)
         rafID = null;
-        
       }
     },
     isRunning,
   };
 }
+
+export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
+  let circs = [];
+  let rects = [];
+  let lastTime = 0;
+  
+  const makeCircles = circleMaker(svgEl)
+  const makeRects = rectMaker(svgEl)
+  
+  const makeShapes = (timestamp = 0) => {
+    
+    makeCircles(timestamp)
+    makeRects(timestamp)
+    
+    requestAnimationFrame(makeShapes)
+    
+  }
+  
+  return makeShapes
+  
+};
