@@ -44,7 +44,7 @@ export const initCalculateFPS = (smoothingWindowSize = 30) => {
     console.warn('delta', delta)
     frameTimes.push(delta);
     
-    if (frameTimes.length > smoothingWindowSize) frameTimes.shift(); // keep last 30 frames
+    // if (frameTimes.length > smoothingWindowSize) frameTimes.shift(); // keep last 30 frames
     
     const avgDelta = frameTimes.reduce((a, b) => a + b) / frameTimes.length;
     fps = Math.round(avgDelta);

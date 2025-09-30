@@ -1,5 +1,6 @@
 import { getSVGTemplate, initCalculateFPS } from './utils.js';
 import { initGradientMan } from './gradienter.js';
+import { frameRate } from './frame-rate.js';
 import svg from 'https://hamilsauce.github.io/hamhelper/modules/svg.js';
 const { createSVGElement } = svg;
 
@@ -36,8 +37,11 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
     
     if (animState.isRunning && delta > 48) {
       
-      const fps = calcFPS(delta)
-      fpsDisplay.textContent = fps
+      lastTime = timestamp;
+      
+      // const fps = calcFPS(delta)
+      const fps = frameRate(delta)
+      fpsDisplay.textContent = `fps: ${fps}`
       angle += angleStep;
       t += tStep;
       hueRotate++
@@ -92,7 +96,6 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
         
       }
       
-      lastTime = timestamp;
     }
     
     svgCanvas.style.filter = `hue-rotate(${hueRotate-hueRotate-1}deg)`
