@@ -1,6 +1,5 @@
 import { circleMaker, rectMaker, animState, initMakeShapes } from './make-shapes.js';
 import ham from 'https://hamilsauce.github.io/hamhelper/hamhelper1.0.0.js';
-
 const { template, getPanZoom } = ham;
 
 
@@ -136,13 +135,13 @@ svg.addEventListener("pointermove", e => {
 });
 
 // --- Buttons for interaction
-document.getElementById("toggleComposite").addEventListener("click", () => {
-  compositeMode = !compositeMode;
-});
+// document.getElementById("toggleComposite").addEventListener("click", () => {
+//   compositeMode = !compositeMode;
+// });
 
-document.getElementById("toggleWave").addEventListener("click", () => {
-  showWave = !showWave;
-});
+// document.getElementById("toggleWave").addEventListener("click", () => {
+//   showWave = !showWave;
+// });
 
 // --- Click to add radial burst
 // svg.addEventListener("click", e => {

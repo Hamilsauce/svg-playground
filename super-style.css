@@ -39,9 +39,10 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
   align-items: center;
-  gap: 0px;
+  gap: 4px;
+  /* overflow-x: hidden; */
   overflow-y: scroll;
 }
 
@@ -57,18 +58,31 @@ body {
 svg {
   border: 1px solid #444;
   background: #222;
-  margin: 1em auto;
+  /* margin: 1em auto; */
   display: block;
   cursor: crosshair;
   /* transition: 5s; */
-
+  
   /* width: 400px; */
   /* height: 400px; */
 }
 
+#snap-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  overflow: auto;
+  width: 100%;
+  height: fit-content;
+}
+
+#snap-links button {}
+
 button {
-  margin: 0.5em;
-  padding: 0.5em 1em;
+  /* margin: 0.5em; */
+  padding: 0.5em 0.5em;
   border-radius: 8px;
   border: none;
   background: #444;
@@ -84,7 +98,8 @@ button a {
   text-decoration: none;
   color: #F4F4F4;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
+  white-space: nowrap;
 }
 
 #compositePath {
@@ -97,29 +112,31 @@ button a {
   stroke: hsla(0, 0%, 100%, 0.9);
   /* filter: invert(0) contrast(1); */
   /* opacity: 0.8; */
-
+  
   /* transition: 1s; */
 }
 
 .basic-rect {
   fill: hsla(170, 100%, 55%, 0.8);
-  stroke: hsla(0, 0%, 100%, 0.9);
-  /* filter: invert(0) contrast(1) brightness(0.8); */
+  stroke: hsla(0, 50%, 100%, 0.75);
+  filter: invert(0) contrast(1) brightness(0.8);
+  filter: opacity(0.5);
   
   /* transition: 1s; */
   /* backdrop-filter: invert(1); */
   /* opacity: 0.8; */
 }
 
-#circleOrbit{
+#circleOrbit {
   fill: #22967A96;
   filter: blur(2px);
 }
-#circleOsc{
+
+#circleOsc {
   fill: #B019A196;
   filter: blur(2px);
 }
 
-#arrow{
+#arrow {
   opacity: 0;
 }

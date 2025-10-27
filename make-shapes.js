@@ -1,6 +1,8 @@
 import { getSVGTemplate, initCalculateFPS } from './utils.js';
 import { initGradientMan } from './gradienter.js';
 import { frameRate } from './frame-rate.js';
+import ham from 'https://hamilsauce.github.io/hamhelper/hamhelper1.0.0.js';
+const { sleep } = ham;
 import svg from 'https://hamilsauce.github.io/hamhelper/modules/svg.js';
 const { createSVGElement } = svg;
 
@@ -9,6 +11,7 @@ const fpsDisplay = document.querySelector('#fps');
 
 export const animState = {
   isRunning: false,
+  
 }
 
 export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
@@ -25,19 +28,16 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let circles = [];
   let circleCounter = 0;
   let rafID = null
+  const frameSize = 24
+  let frameWindow = 0;
   const svgCanvas = svgEl.closest('svg')
-  const getGradient = initGradientMan(200)
   
-  let lastTime = 0;
-  
-  const createCircle = (timestamp = 0) => {
-    const delta = (timestamp - lastTime);
+  const createCircle = (delta = 0) => {
+    frameWindow += delta
     
-    if (animState.isRunning && delta > 24) {
+    if (animState.isRunning && frameWindow > frameSize) {
+      frameWindow = 0
       
-      lastTime = timestamp;
-      const fps = frameRate(delta)
-      fpsDisplay.textContent = `fps: ${fps}`
       angle += angleStep;
       t += tStep;
       hueRotate++
@@ -55,14 +55,11 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
         const rand = Math.random() * 10
         const orbitX = cx + 100 * Math.cos(angle);
         const orbitY = cy + 100 * Math.sin(angle);
-        const { background, transform } = getGradient()
         
-        // svgCanvas.style.background = background
         
         const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
           style: {
             fill: `hsla(${hueRotate - rand}, 100%, 50%, ${opacity})`,
-            transform,
             filter: `opacity(${opacity}) drop-shadow(0 0 2px #00000025)`,
           },
           attrs: {
@@ -77,10 +74,6 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
         circles.shift().remove();
       }
     }
-    
-    // svgCanvas.style.filter = `hue-rotate(${hueRotate-hueRotate-1}deg)`
-    // rafID = requestAnimationFrame(createCircle);
-    
   }
   
   return createCircle;
@@ -107,13 +100,17 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let circleCounter = 0;
   let rotoMod = 2
   const svgCanvas = svgEl.closest('svg')
-  let lastTime = 0;
+  
+  const frameSize = 0
+  let frameWindow = 0;
   
   
-  const createRect = (timestamp) => {
-    const delta = (timestamp - lastTime);
+  const createRect = (delta) => {
+    frameWindow += delta
     
-    if (animState.isRunning && delta > 24) {
+    if (animState.isRunning && frameWindow > frameSize) {
+      frameWindow = 0
+      
       angle -= angleStep;
       t += tStep;
       hueRotate++
@@ -148,7 +145,6 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
             width: radius,
             height: radius,
             transform: `translate(${orbitX},${orbitY}) rotate(${hueRotate*rotoMod})`,
-            // transform: `translate(${orbitX},${orbitY}) rotate(${hueRotate*rotoMod})`,
             rx: borderRadius,
             ry: borderRadius,
             
@@ -161,50 +157,151 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
         rects.shift().remove();
       }
       
-      lastTime = timestamp;
     }
-    
-    // rafID = requestAnimationFrame(createRect);
   }
   
   return createRect
-  
-  return {
-    start() {
-      isRunning = true
-      console.warn('rafID', rafID)
-      if (rafID == null) {
-        // createRect(0);
-        rafID = requestAnimationFrame(createRect);
-      }
-    },
-    stop() {
-      if (rafID !== null) {
-        cancelAnimationFrame(rafID)
-        rafID = null;
-      }
-    },
-    isRunning,
-  };
 }
+
+const rectMakerGPT = (svgEl, baseAngleStep = 0.02, baseRadius = 80, hueMod, classID = 5) => {
+  let angle = Math.random() * Math.PI * 2;
+  let radius = baseRadius;
+  let radiusDrift = 0.15;
+  let angleDrift = (Math.random() - 0.5) * 0.002;
+  let hue = Math.random() * 360;
+  let opacity = 0.4;
+  let cx = 250,
+    cy = 250;
+  const rects = [];
+  let opacityStep = 0.0075;
+  
+  const frameWindow = 16;
+  let frameSize = 0;
+  
+  return (delta) => {
+    frameSize += delta
+    if (!animState.isRunning || frameSize <= frameWindow) return;
+    frameSize = 0
+    // slow evolution of parameters
+    console.warn('delta', { delta }, classID)
+    
+    
+    angle += baseAngleStep + angleDrift;
+    radius += radiusDrift;
+    hue += 0.7;
+    
+    // occasionally flip radius drift to create spiral in/out
+    if (radius > 120 || radius < 20) radiusDrift *= -1;
+    
+    // compute orbital position
+    const orbitX = cx + radius * Math.cos(angle);
+    const orbitY = cy + radius * Math.sin(angle);
+    
+    opacityStep = opacity > 0.4 || opacity <= 0.1 ? -opacityStep : opacityStep;
+    opacity = opacity + opacityStep;
+    
+    if (rects.length <= 100) {
+      
+      const rect = getSVGTemplate(svgEl.closest('svg'), 'basic-rect', {
+        style: {
+          fill: `hsla(${hue}, 100%, 50%, ${opacity})`,
+          filter: `drop-shadow(0 0 5px #00000030)`,
+        },
+        attrs: {
+          width: radius / 2,
+          height: radius / 2,
+          transform: `translate(${orbitX},${orbitY}) rotate(${(hue * 2)})`,
+        }
+      });
+      
+      svgEl.append(rect);
+      rects.push(rect);
+    }
+    else {
+      rects.shift().remove();
+      
+    }
+    // if (rects.length > 150) rects.shift().remove();
+  };
+};
 
 export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let circs = [];
   let rects = [];
   let lastTime = 0;
+  let makerArrayIndex = 0
+  const frameSize = 48
+  let frameWindow = 0
+  const appHeaderLeft = document.querySelector('#app-header-left')
+  
+  const svgCanvas = svgEl.closest('svg')
+  const getGradient = initGradientMan(200)
+  
   
   const makeCircles = circleMaker(svgEl)
   const makeRects = rectMaker(svgEl)
+  // const makeRectsGPT = rectMakerGPT(svgEl, 0.018, 100)
   
-  const makeShapes = (timestamp = 0) => {
+  const gptMakers = [
+    rectMakerGPT(svgEl, 0.003, 90, 0, 1, 3),
+    // rectMakerGPT(svgEl, 0.001, 110, 1),
+    rectMakerGPT(svgEl, -0.007, 70, 2),
+    // rectMakerGPT(svgEl, 0.039, 140, 3),
+  ];
+  
+  
+  
+  let startTime = null
+  let currentTime = 0
+  
+  const makeShapes = async (timestamp = 0) => {
+    const delta = (timestamp - lastTime);
+    lastTime = timestamp;
+    frameWindow += delta;
     
-    makeCircles(timestamp)
-    makeRects(timestamp)
+    if (animState.isRunning && frameWindow > frameSize) {
+      frameWindow = 0;
+      
+      startTime = startTime === null ? timestamp : startTime;
+      currentTime = timestamp
+      
+      const fps = frameRate(delta)
+      appHeaderLeft.textContent = `${Math.round(currentTime - startTime)}`
+      fpsDisplay.textContent = `fps: ${fps}`
+      
+      // console.warn('maker', maker)
+      let maker = gptMakers[makerArrayIndex]
+      // console.warn('makerArrayIndex', makerArrayIndex)
+      
+      makerArrayIndex = makerArrayIndex >= gptMakers.length - 1 ? 0 : makerArrayIndex + 1;
+      // makerArrayIndex = maker ? makerArrayIndex + 1 : 0
+      // await sleep(80)
+      
+      maker(delta)
+      
+      // maker = gptMakers[makerArrayIndex]
+      // await sleep(100)
+      // maker(delta)
+      
+      makeCircles(delta)
+      makeRects(delta)
+      // makeRectsGPT(delta)
+      // const makers = [
+      // makeRectsGPT(svgEl, 0.15, 40);
+      // makeRectsGPT(svgEl, 0.55, 60);
+      // await sleep(120)
+      // makeRectsGPT(svgEl, 0.9, 100);
+      // await sleep(40)
+      // ];
+      
+      
+      
+      Object.assign(svgCanvas.style, getGradient())
+    }
     
     requestAnimationFrame(makeShapes)
-    
   }
   
-  return makeShapes
+  return makeShapes;
   
 };
