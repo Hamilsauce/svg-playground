@@ -108,12 +108,12 @@ button a {
 }
 
 .basic-circle {
-  fill: hsla(170, 100%, 55%, 0.8);
-  stroke: hsla(0, 0%, 100%, 0.9);
+  /* fill: hsla(170, 100%, 55%, 0.8); */
+  stroke: hsla(0, 0%, 100%, 0.5);
   /* filter: invert(0) contrast(1); */
   /* opacity: 0.8; */
   
-  /* transition: 1s; */
+  transition: 0.5s;
 }
 
 .basic-rect {
