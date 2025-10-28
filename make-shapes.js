@@ -79,7 +79,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       svgEl.append(circ)
       circles.push(circ)
       // } 
-      if (circles.length >= 200) {
+      if (circles.length >= 125) {
         circles.shift().remove();
       }
     }
