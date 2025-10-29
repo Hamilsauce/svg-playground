@@ -4,6 +4,9 @@
   margin: 0;
   z-index: 0;
   touch-action: none;
+  user-select: none;
+  transition: 8.5s;
+
 }
 
 html {
@@ -67,6 +70,12 @@ svg {
   /* height: 400px; */
 }
 
+#modeOptions{
+  input {
+    padding: 8px;
+  }
+}
+
 #snap-links {
   display: flex;
   flex-direction: row;
@@ -113,7 +122,6 @@ button a {
   /* filter: invert(0) contrast(1); */
   /* opacity: 0.8; */
   
-  transition: 0.5s;
 }
 
 .basic-rect {

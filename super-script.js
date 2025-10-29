@@ -13,6 +13,7 @@ const arrow = document.getElementById("arrow");
 const wavePath = document.getElementById("wavePath");
 const compositeDot = document.getElementById("compositeDot");
 const compositePath = document.getElementById("compositePath");
+const modeOptions = document.getElementById("modeOptions");
 
 getPanZoom(svg)
 const makeShapes = initMakeShapes(shapeContainer)
@@ -123,6 +124,21 @@ svg.addEventListener('click', e => {
   else {
     console.warn('should be started')
     // makeRects.start()
+  }
+});
+
+console.warn('modeOptions', modeOptions)
+modeOptions.addEventListener('click', e => {
+  const { target } = e
+  const mode = target.dataset.mode;
+  console.warn('mode', mode)
+  if (!mode) return;
+  
+  if (mode === 'invert') {
+    animState.invert = animState.invert === 0 ? 1 : 0;
+  } else {
+    animState.fillOpacity = mode;
+    
   }
 });
 

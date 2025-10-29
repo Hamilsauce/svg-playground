@@ -9,9 +9,18 @@ const { createSVGElement } = svg;
 const calcFPS = initCalculateFPS();
 const fpsDisplay = document.querySelector('#fps');
 
+const effectMode = {
+  regular: 'regular',
+  transparent: 'transparent',
+  alternate: 'alternate',
+  invert: 'invert',
+}
+
 export const animState = {
   isRunning: false,
-  
+  effectMode: effectMode.regular,
+  fillOpacity: 0.8,
+  invert: 0,
 }
 
 export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
@@ -19,20 +28,24 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let angle = 0;
   let t = 0;
   let orbitStep = 2;
-  let cx = 250;
-  let cy = 250;
-  let radius = 41;
+  let cx = 200;
+  let cy = 200;
+  let radius = 2;
   let radiusStep = 1;
   let opacityStep = 0.0075;
   let opacity = 0.5;
   let circles = [];
   let circleCounter = 0;
   let rafID = null
-  const frameSize = 0
+  const frameSize = 8
   let frameWindow = 0;
   const svgCanvas = svgEl.closest('svg')
-  let opa2 = 99;
-  let opa2Step = -1;
+  let opa2 = 50;
+  let opaNeg = 1;
+  let opa2Step = -2;
+  let invert = 0
+  
+  
   const createCircle = (delta = 0) => {
     frameWindow += delta
     
@@ -45,7 +58,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       
       opacityStep = opacity > 0.5 || opacity <= 0.1 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
-      radiusStep = radius > 200 || radius <= 40 ? -radiusStep : radiusStep;
+      radiusStep = radius > 150 || radius <= 1 ? -radiusStep : radiusStep;
       radius = radius + radiusStep;
       
       orbitStep = cx >= 100 || cx <= 50 ? -orbitStep : orbitStep;
@@ -58,17 +71,45 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       }
       
       opa2 = opa2 + opa2Step
+      opaNeg = opaNeg + opa2Step
+      
+      switch (animState.fillOpacity) {
+        case 'regular':
+          animState.fillOpacity = opa2 / 100;
+          break;
+        case 'transparent':
+          animState.fillOpacity = opa2 / 10000;
+          break;
+        case 'alternate':
+          animState.fillOpacity = opaNeg / 100;
+          break;
+          
+        case 'invert':
+
+          // animState.invert = animState.invert === 0 ? 1 : 0;
+          break;
+          
+        default:
+          // Tab to edit
+          animState.fillOpacity = animState.fillOpacity
+      }
+      
+      let fillOpacity = animState.fillOpacity
+      let invert = animState.invert
+
+      // const fillOpacity = animState.effectMode === effectMode.transparent ? opaNeg / 100 : opa2
       // if (circles.length <= 100) {
       const rand = Math.random() * 10
       // const orbitX = cx // + 100 * Math.cos(angle);
       // const orbitY = cy // + 100 * Math.sin(angle);
-      const orbitX = cx + 0 * Math.cos(angle);
-      const orbitY = cy + 0 * Math.sin(angle);
-      
+      const orbitX = cx + 50 * Math.cos(angle);
+      const orbitY = cy + 50 * Math.sin(angle);
+      // console.warn('fillOpacity', fillOpacity)    
+      // console.warn('animState.effectMode', animState.effectMode)    
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {
-          fill: `hsla(${hueRotate - rand}, 100%, 50%, ${opa2/100})`,
-          filter: `opacity(${0.5}) drop-shadow(0 0 5px #00000030)`,
+          fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillOpacity})`,
+          filter: `invert(${invert}) opacity(${opa2}) drop-shadow(0 0 5px #00000030)`,
         },
         attrs: {
           transform: `translate(${orbitX},${orbitY}) `,
@@ -79,7 +120,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       svgEl.append(circ)
       circles.push(circ)
       // } 
-      if (circles.length >= 125) {
+      if (circles.length >= 200) {
         circles.shift().remove();
       }
     }
@@ -239,7 +280,7 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let rects = [];
   let lastTime = 0;
   let makerArrayIndex = 0
-  const frameSize = 16
+  const frameSize = 24
   
   let frameWindow = 0
   const appHeaderLeft = document.querySelector('#app-header-left')
