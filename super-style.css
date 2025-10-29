@@ -5,8 +5,7 @@
   z-index: 0;
   touch-action: none;
   user-select: none;
-  transition: 8.5s;
-
+  
 }
 
 html {
@@ -70,7 +69,28 @@ svg {
   /* height: 400px; */
 }
 
-#modeOptions{
+#viewport {
+  transition: 11.5s;
+  
+  * {
+    transition: 11.5s;
+  }
+}
+
+#viewport.notrans {
+  transition: 0s;
+  
+  * {
+    transition: 0s;
+    
+  }
+}
+
+#viewport * {
+  transition: 8.5s;
+}
+
+#modeOptions {
   input {
     padding: 8px;
   }

@@ -19,7 +19,7 @@ const effectMode = {
 export const animState = {
   isRunning: false,
   effectMode: effectMode.regular,
-  fillOpacity: 0.8,
+  fillEffect: 0.8,
   invert: 0,
 }
 
@@ -73,42 +73,32 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       opa2 = opa2 + opa2Step
       opaNeg = opaNeg + opa2Step
       
-      switch (animState.fillOpacity) {
+      let fillEffect
+      
+      
+      switch (animState.fillEffect) {
         case 'regular':
-          animState.fillOpacity = opa2 / 100;
+          fillEffect = opa2 / 100;
           break;
         case 'transparent':
-          animState.fillOpacity = opa2 / 10000;
+          fillEffect = opa2 / 10000;
           break;
         case 'alternate':
-          animState.fillOpacity = opaNeg / 100;
-          break;
-          
-        case 'invert':
-
-          // animState.invert = animState.invert === 0 ? 1 : 0;
+          fillEffect = opaNeg / 100;
           break;
           
         default:
-          // Tab to edit
-          animState.fillOpacity = animState.fillOpacity
+          fillEffect = opa2 / 100;
       }
       
-      let fillOpacity = animState.fillOpacity
       let invert = animState.invert
-
-      // const fillOpacity = animState.effectMode === effectMode.transparent ? opaNeg / 100 : opa2
-      // if (circles.length <= 100) {
+      
       const rand = Math.random() * 10
-      // const orbitX = cx // + 100 * Math.cos(angle);
-      // const orbitY = cy // + 100 * Math.sin(angle);
       const orbitX = cx + 50 * Math.cos(angle);
       const orbitY = cy + 50 * Math.sin(angle);
-      // console.warn('fillOpacity', fillOpacity)    
-      // console.warn('animState.effectMode', animState.effectMode)    
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {
-          fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillOpacity})`,
+          fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
           filter: `invert(${invert}) opacity(${opa2}) drop-shadow(0 0 5px #00000030)`,
         },
         attrs: {
@@ -119,7 +109,6 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       
       svgEl.append(circ)
       circles.push(circ)
-      // } 
       if (circles.length >= 200) {
         circles.shift().remove();
       }
@@ -232,18 +221,14 @@ const rectMakerGPT = (svgEl, baseAngleStep = 0.02, baseRadius = 80, hueMod, clas
     frameSize += delta
     if (!animState.isRunning || frameSize <= frameWindow) return;
     frameSize = 0
-    // slow evolution of parameters
-    console.warn('delta', { delta }, classID)
     
     
     angle += baseAngleStep + angleDrift;
     radius += radiusDrift;
     hue += 0.7;
     
-    // occasionally flip radius drift to create spiral in/out
     if (radius > 120 || radius < 20) radiusDrift *= -1;
     
-    // compute orbital position
     const orbitX = cx + radius * Math.cos(angle);
     const orbitY = cy + radius * Math.sin(angle);
     
@@ -271,7 +256,6 @@ const rectMakerGPT = (svgEl, baseAngleStep = 0.02, baseRadius = 80, hueMod, clas
       rects.shift().remove();
       
     }
-    // if (rects.length > 150) rects.shift().remove();
   };
 };
 
@@ -289,8 +273,8 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   const getGradient = initGradientMan(200)
   
   
-  const makeCircles = circleMaker(svgEl)
-  const makeRects = rectMaker(svgEl)
+  const makeCircles = circleMaker(svgEl);
+  const makeRects = rectMaker(svgEl);
   // const makeRectsGPT = rectMakerGPT(svgEl, 0.018, 100)
   
   const gptMakers = [
@@ -300,10 +284,8 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
     // rectMakerGPT(svgEl, 0.039, 140, 3),
   ];
   
-  
-  
-  let startTime = null
-  let currentTime = 0
+  let startTime = null;
+  let currentTime = 0;
   
   const makeShapes = async (timestamp = 0) => {
     const delta = (timestamp - lastTime);
@@ -314,11 +296,11 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       frameWindow = 0;
       
       startTime = startTime === null ? timestamp : startTime;
-      currentTime = timestamp
+      currentTime = timestamp;
       
       const fps = frameRate(delta)
-      appHeaderLeft.textContent = `${Math.round(currentTime - startTime)}`
-      fpsDisplay.textContent = `fps: ${fps}`
+      appHeaderLeft.textContent = `${Math.round(currentTime - startTime)}`;
+      fpsDisplay.textContent = `fps: ${fps}`;
       
       // console.warn('maker', maker)
       // let maker = gptMakers[makerArrayIndex]
@@ -334,25 +316,13 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       // await sleep(100)
       // maker(delta)
       
-      makeCircles(delta)
-      // makeRects(delta)
-      // makeRectsGPT(delta)
-      // const makers = [
-      // makeRectsGPT(svgEl, 0.15, 40);
-      // makeRectsGPT(svgEl, 0.55, 60);
-      // await sleep(120)
-      // makeRectsGPT(svgEl, 0.9, 100);
-      // await sleep(40)
-      // ];
+      makeCircles(delta);
       
-      
-      
-      Object.assign(svgCanvas.style, getGradient())
+      Object.assign(svgCanvas.style, getGradient());
     }
     
-    requestAnimationFrame(makeShapes)
+    requestAnimationFrame(makeShapes);
   }
   
   return makeShapes;
-  
 };

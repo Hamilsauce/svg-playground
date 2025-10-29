@@ -14,7 +14,7 @@ const wavePath = document.getElementById("wavePath");
 const compositeDot = document.getElementById("compositeDot");
 const compositePath = document.getElementById("compositePath");
 const modeOptions = document.getElementById("modeOptions");
-
+console.warn('getPanZoom', getPanZoom)
 getPanZoom(svg)
 const makeShapes = initMakeShapes(shapeContainer)
 const makecircles = circleMaker(shapeContainer)
@@ -137,18 +137,25 @@ modeOptions.addEventListener('click', e => {
   if (mode === 'invert') {
     animState.invert = animState.invert === 0 ? 1 : 0;
   } else {
-    animState.fillOpacity = mode;
+    animState.fillEffect = mode;
     
   }
 });
 
-svg.addEventListener("pointermove", e => {
-  const rect = svg.getBoundingClientRect();
-  const dx = e.clientX - rect.left - cx;
-  const dy = e.clientY - rect.top - cy;
-  const ang = Math.atan2(dy, dx) * 180 / Math.PI;
-  arrow.setAttribute("transform", `translate(${cx},${cy}) rotate(${ang})`);
+svg.addEventListener("pointerdown", e => {
+  viewport.classList.add('notrans')
 });
+
+svg.addEventListener("pointerup", e => {
+  viewport.classList.remove('notrans')
+});
+// svg.addEventListener("pointermove", e => {
+//   const rect = svg.getBoundingClientRect();
+//   const dx = e.clientX - rect.left - cx;
+//   const dy = e.clientY - rect.top - cy;
+//   const ang = Math.atan2(dy, dx) * 180 / Math.PI;
+//   arrow.setAttribute("transform", `translate(${cx},${cy}) rotate(${ang})`);
+// });
 
 // --- Buttons for interaction
 // document.getElementById("toggleComposite").addEventListener("click", () => {
