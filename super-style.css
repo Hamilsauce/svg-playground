@@ -174,10 +174,15 @@ svg {
   font-weight: 600 !important;
   cursor: pointer;
   width: 100%;
+  filter: brightness(1.25) contrast(1.8) ;
+
 }
 
-.app-button:hover {
+/* .app-button:hover {
   background: #666;
+} */
+.app-button.active {
+  filter: brightness(2) contrast(1.0) ;
 }
 
 .app-button a {

@@ -127,14 +127,20 @@ svg.addEventListener('click', e => {
   }
 });
 
-console.warn('modeOptions', modeOptions)
 modeOptions.addEventListener('click', e => {
   const { target } = e
   const mode = target.dataset.mode;
-  console.warn('mode', mode)
+  const group = target.closest('.option-group');
   if (!mode) return;
+  const buttons = [...group.querySelectorAll('.app-button')]
+  // const currActive = group .querySelector('.active')
   
+  buttons.forEach((el, i) => {
+    el.classList.remove('active');
+  });
   
+  target.classList.add('active');
+
   if (mode === 'invert') {
     animState.invert = animState.invert === 0 ? 1 : 0;
     return;
