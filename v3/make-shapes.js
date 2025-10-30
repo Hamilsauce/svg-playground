@@ -62,7 +62,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       t += tStep;
       hueRotate++
       
-      opacityStep = opacity > 0.5 || opacity <= 0.1 ? -opacityStep : opacityStep;
+      opacityStep = opacity > 0.8 || opacity <= 0.1 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
       radiusStep = radius > 200 || radius <= 25 ? -radiusStep : radiusStep;
       radius = radius + radiusStep;
@@ -72,7 +72,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       cy = cy + orbitStep;
       
       
-      if (opa2 >= 70 || opa2 <= 0) {
+      if (opa2 >= 80 || opa2 <= 20) {
         opa2Step = -opa2Step
       }
       
@@ -85,7 +85,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       
       switch (animState.fillEffect) {
         case 'regular':
-          fillEffect = opa2 / 500;
+          fillEffect = opa2 / 100;
           break;
         case 'transparent':{
           fillEffect = opa2 / 10000;
@@ -108,7 +108,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {
           fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
-          filter:  `invert(${invert}) opacity(${opa2/100}) drop-shadow(0 0 5px #00000020)`,
+          filter:  `invert(${invert}) opacity(${opa2/1}) drop-shadow(0 0 5px #00000020)`,
           'mix-blend-mode': animState.blendMode,
           // 'mix-blend-mode': 'saturation',
           // 'mix-blend-mode': 'difference',
@@ -137,7 +137,7 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let hueRotate = 180;
   let angle = 0;
   let t = 0;
-  let cx = 250;
+  let cx = 200;
   let cy = 250;
   let radius = 41;
   let radiusStep = 0.9;
@@ -177,7 +177,7 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       
       borderRadiusStep = borderRadius >= 20 || borderRadius <= 0 ? -borderRadiusStep : borderRadiusStep;
       borderRadius = borderRadius + borderRadiusStep;
-      orbitStep = cx >= 100 || cx <= 25 ? -orbitStep : orbitStep;
+      orbitStep = cx >= 50 || cx <= 2 ? -orbitStep : orbitStep;
       
       cx = cx + orbitStep;
       cy = cy + orbitStep;
@@ -188,9 +188,9 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
         
         const rect = getSVGTemplate(svgCanvas, 'basic-rect', {
           style: {
-            fill: `hsla(${hueRotate}, 100%, 50%, ${opacity})`,
+            fill: `hsla(${hueRotate}, 100%, 50%, ${opacity/2})`,
             filter: `drop-shadow(0 0 5px #00000030)`,
-            // 'mix-blend-mode': 'hard-light',
+            // 'mix-blend-mode': 'overlay',
             // 'mix-blend-mode': 'darken',
             'mix-blend-mode': 'color',
             

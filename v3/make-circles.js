@@ -63,7 +63,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
             filter: `opacity(${opacity}) drop-shadow(0 0 2px #00000025)`,
           },
           attrs: {
-            transform: `translate(${orbitX},${orbitY}) `,
+            transform: `translate(${orbitX+Math.cos(angle)+rand},${orbitY+Math.cos(angle)}) `,
             r: radius,
           }
         });
@@ -85,8 +85,8 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let hueRotate = 180;
   let angle = 0;
   let t = 0;
-  let cx = 150;
-  let cy = 150;
+  let cx = 75;
+  let cy = 75;
   let radius = 41;
   let radiusStep = 0.9;
   let opacityStep = 0.0075;
@@ -130,9 +130,9 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
-      if (rects.length <= 150) {
-        const orbitX = cx + 100 * Math.cos(angle);
-        const orbitY = cy + 100 * Math.sin(angle);
+      if (rects.length <= 1) {
+        const orbitX = cx + 50 * Math.cos(angle);
+        const orbitY = cy + 50 * Math.sin(angle);
         
         const rect = getSVGTemplate(svgCanvas, 'basic-rect', {
           style: {

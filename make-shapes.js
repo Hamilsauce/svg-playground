@@ -30,7 +30,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let orbitStep = 2;
   let cx = 200;
   let cy = 200;
-  let radius = 2;
+  let radius = 4;
   let radiusStep = 1;
   let opacityStep = 0.0075;
   let opacity = 0.5;
@@ -44,6 +44,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let opaNeg = 1;
   let opa2Step = -2;
   let invert = 0
+  let orbitModLong = 0
   
   
   const createCircle = (delta = 0) => {
@@ -58,10 +59,10 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       
       opacityStep = opacity > 0.5 || opacity <= 0.1 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
-      radiusStep = radius > 150 || radius <= 1 ? -radiusStep : radiusStep;
+      radiusStep = radius > 150 || radius <= 3 ? -radiusStep : radiusStep;
       radius = radius + radiusStep;
       
-      orbitStep = cx >= 100 || cx <= 50 ? -orbitStep : orbitStep;
+      orbitStep = cx >= 100 || cx <= 40 ? -orbitStep : orbitStep;
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
@@ -76,7 +77,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       let fillEffect
       
       
-      switch (animState.fillEffect) {
+      switch (animState.effectMode) {
         case 'regular':
           fillEffect = opa2 / 100;
           break;
@@ -94,15 +95,23 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       let invert = animState.invert
       
       const rand = Math.random() * 10
-      const orbitX = cx + 50 * Math.cos(angle);
-      const orbitY = cy + 50 * Math.sin(angle);
+      const orbitX = cx + 25 * Math.cos(angle);
+      const orbitY = cy + 25 * Math.sin(angle);
+      
+      const orbitMod = Math.cos(angle) * (3 * 10)
+      // console.warn('fillEffect', fillEffect)
+      console.warn('animState.effectMode', animState.effectMode)
+
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {
           fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
           filter: `invert(${invert}) opacity(${opa2}) drop-shadow(0 0 5px #00000030)`,
         },
         attrs: {
-          transform: `translate(${orbitX},${orbitY}) `,
+          // transform: `translate(${orbitX},${orbitY}) `,
+        // transform: `translate(${orbitX+(orbitMod/2)},${orbitY-(orbitMod/2)}) `,
+        transform: `translate(${orbitX-(orbitMod)},${orbitY+(orbitMod)}) `,
+          
           r: radius,
         }
       });
