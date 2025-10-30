@@ -46,9 +46,11 @@ body {
   gap: 10px;
   height: 80px;
   /* width: 100%; */
+  pointer-events: all;
+  z-index: 2;
   
   
-  background: hsla(235, 48%, 59%, 0.59);
+  background: hsla(223, 19%, 23%, 0.27);
 }
 
 #app-body {
