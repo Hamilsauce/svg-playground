@@ -109,10 +109,10 @@ svg {
 #modeOptions {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  gap: 16px;
-  /* width: 100%; */
+  gap: 32px;
+  width: 100%;
   padding: 2px 4px;
   
   input {
@@ -122,16 +122,16 @@ svg {
   .option-group {
     display: grid;
     grid-template-rows: 1fr 1fr;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 2fr);
     /* grid-auto-columns: 1fr; */
 
-    /* justify-content: center; */
+    /* justify-content: flex-start; */
     
     /* align-items: center; */
     gap: 4px;
     padding: 4px;
     /* width: fit-content !important; */
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
     background: #2C2D3594;
     border-radius: 20px 10px 40% 10px;
@@ -144,6 +144,7 @@ svg {
       gap: 0px;
       font-weight: 600;
       font-size: 14px;
+      color: #E9E9E9AB;
     }
     
   }
@@ -157,7 +158,7 @@ svg {
   gap: 2px;
   overflow: auto;
   /* width: 10%; */
-  height: fit-content;
+  /* height: fit-content; */
 }
 
 #snap-links button {}
@@ -166,12 +167,13 @@ svg {
   /* margin: 0.5em; */
   padding: 0.1em 0.2em;
   border-radius: 8px;
-  border: 1.5px solid #32353B;
+  border: 1.5px solid #151B27;
   background: #444;
   color: #eee;
   font-size: 15px !important;
   font-weight: 600 !important;
   cursor: pointer;
+  width: 100%;
 }
 
 .app-button:hover {
