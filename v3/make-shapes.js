@@ -27,6 +27,15 @@ export const animState = {
   blendMode: blendMode.saturation,
   fillEffect: 0.8,
   invert: 0,
+  activeShapes: {
+    circle: true,
+    rect: true,
+  },
+}
+
+const renderedShapes = {
+  circle: [],
+  rect: [],
 }
 
 export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
@@ -87,11 +96,11 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
         case 'regular':
           fillEffect = opa2 / 100;
           break;
-        case 'transparent':{
+        case 'transparent': {
           fillEffect = opa2 / 10000;
           contrast = 5
-        }    
-          break;
+        }
+        break;
         case 'alternate':
           fillEffect = opaNeg / 100;
           break;
@@ -108,7 +117,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {
           fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
-          filter:  `invert(${invert}) opacity(${opa2/1}) drop-shadow(0 0 5px #00000020)`,
+          filter: `invert(${invert}) opacity(${opa2/1}) drop-shadow(0 0 5px #00000020)`,
           'mix-blend-mode': animState.blendMode,
           // 'mix-blend-mode': 'saturation',
           // 'mix-blend-mode': 'difference',
@@ -119,11 +128,11 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
           r: radius,
         }
       });
-
+      
       svgEl.append(circ)
-      circles.push(circ)
-      if (circles.length >= 105) {
-        circles.shift().remove();
+      renderedShapes.circle.push(circ)
+      if (renderedShapes.circle.length >= 105) {
+        renderedShapes.circle.shift().remove();
       }
     }
   }
@@ -148,7 +157,6 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let borderRadiusStep = 0.5
   
   let opacity = 0.6;
-  let rects = [];
   let circleCounter = 0;
   let rotoMod = 2
   const svgCanvas = svgEl.closest('svg')
@@ -182,7 +190,7 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
-      if (rects.length <= 20) {
+      if (renderedShapes.rect.length <= 20) {
         const orbitX = cx + 100 * Math.cos(angle);
         const orbitY = cy + 100 * Math.sin(angle);
         
@@ -208,9 +216,9 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
         });
         
         svgEl.append(rect)
-        rects.push(rect)
+        renderedShapes.rect.push(rect)
       } else {
-        rects.shift().remove();
+        renderedShapes.rect.shift().remove();
       }
       
     }
@@ -332,10 +340,19 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       // maker = gptMakers[makerArrayIndex]
       // await sleep(100)
       // maker(delta)
+      if (animState.activeShapes.circle) {
+        makeCircles(delta);
+      }
+      else if (renderedShapes.circle.length) {
+        renderedShapes.circle.shift().remove()
+      }
       
-      makeRects(delta);
-      makeCircles(delta);
-
+      if (animState.activeShapes.rect) {
+        makeRects(delta);
+      } else if (renderedShapes.rect.length) {
+        renderedShapes.rect.shift().remove()
+      }
+      
       Object.assign(svgCanvas.style, getGradient());
     }
     

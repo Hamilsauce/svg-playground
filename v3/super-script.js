@@ -129,25 +129,34 @@ svg.addEventListener('click', e => {
 
 modeOptions.addEventListener('click', e => {
   const { target } = e
-  const mode = target.dataset.mode;
+  const { mode, shape, blend } = target.dataset;
   const group = target.closest('.option-group');
-  if (!mode) return;
+  if (!mode || !group) return;
+  
+  const { groupName } = group.dataset //.groupName;
+  
   const buttons = [...group.querySelectorAll('.app-button')]
-  // const currActive = group .querySelector('.active')
   
-  buttons.forEach((el, i) => {
-    const isTarget = el.value === target.value
+  if (groupName !== 'shape') {
+    buttons.forEach((el, i) => {
+      const isTarget = el.value === target.value
+      
+      if (el.classList.contains('active') && isTarget) {
+        el.classList.remove('active');
+      } else if (isTarget) {
+        el.classList.add('active');
+      } else {
+        el.classList.remove('active');
+      }
+    });
+  }
+  
+  if (mode === 'shape') {
+    animState.activeShapes[shape] = !animState.activeShapes[shape]
+    target.classList.toggle('active')
     
-    if (el.classList.contains('active') && isTarget) {
-      el.classList.remove('active');
-    } else if (isTarget) {
-      el.classList.add('active');
-    } else {
-      el.classList.remove('active');
-    }
-  });
-  
-  // target.classList.add('active');
+    return;
+  }
   
   if (mode === 'invert') {
     animState.invert = animState.invert === 0 ? 1 : 0;
@@ -169,36 +178,3 @@ svg.addEventListener("pointerdown", e => {
 svg.addEventListener("pointerup", e => {
   viewport.classList.remove('notrans')
 });
-// svg.addEventListener("pointermove", e => {
-//   const rect = svg.getBoundingClientRect();
-//   const dx = e.clientX - rect.left - cx;
-//   const dy = e.clientY - rect.top - cy;
-//   const ang = Math.atan2(dy, dx) * 180 / Math.PI;
-//   arrow.setAttribute("transform", `translate(${cx},${cy}) rotate(${ang})`);
-// });
-
-// --- Buttons for interaction
-// document.getElementById("toggleComposite").addEventListener("click", () => {
-//   compositeMode = !compositeMode;
-// });
-
-// document.getElementById("toggleWave").addEventListener("click", () => {
-//   showWave = !showWave;
-// });
-
-// --- Click to add radial burst
-// svg.addEventListener("click", e => {
-//   const rect = svg.getBoundingClientRect();
-//   const mx = e.clientX - rect.left;
-//   const my = e.clientY - rect.top;
-//   for (let i = 0; i < 8; i++) {
-//     const a = (i / 8) * 2 * Math.PI;
-//     const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-//     dot.setAttribute("cx", mx + 40 * Math.cos(a));
-//     dot.setAttribute("cy", my + 40 * Math.sin(a));
-//     dot.setAttribute("r", 3);
-//     dot.setAttribute("fill", "#0ff");
-//     svg.appendChild(dot);
-//     setTimeout(() => dot.remove(), 1500);
-//   }
-// });
