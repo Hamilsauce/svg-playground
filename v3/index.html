@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
   <title>app</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.min.js" integrity="sha512-y3JTS47nnpKORJX8Jn1Rlm+QgRIIZHtu3hWxal0e81avPrqUH48yk+aCi+gprT0RMAcpYa0WCkapxe+bpBHD6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link rel="stylesheet" href="./super-style.css" />
+  <link rel="stylesheet" href="../super-style.css" />
 </head>
 
 <body>
@@ -26,27 +26,27 @@
     </header>
     <section id="app-body">
       <div id="snap-links">
-        <button type="button">
+        <button type="button" class="app-button">
           <a href="https://hamilsauce.github.io/svg-play ground/snaps/svg-snap1.html">
             saved 1
           </a>
         </button>
-        <button type="button">
+        <button type="button" class="app-button">
           <a href="https://hamilsauce.github.io/svg-play ground/snaps/svg-snap2.html">
             saved 2
           </a>
         </button>
-        <button type="button">
+        <button type="button" class="app-button">
           <a href="https://hamilsauce.github.io/svg-play ground/snaps/svg-snap3.html">
             saved 3
           </a>
         </button>
-        <button type="button">
+        <button type="button" class="app-button">
           <a href="https://hamilsauce.github.io/svg-play ground/snaps/svg-snap4.html">
             saved 4
           </a>
         </button>
-        <button type="button">
+        <button type="button" class="app-button">
           <a href="https://hamilsauce.github.io/svg-play ground/snaps/svg-snap5.html">
             saved 5
           </a>
@@ -63,7 +63,7 @@
         </defs>
         
         <g id=viewport transform="scale(1) translate(-50,-50)">
-        <!-- <g id=viewport transform="matrix(0.2599706368108156 0 0 0.2599706368108156 164.21184944345273 87.31026708264696)"> -->
+          <!-- <g id=viewport transform="matrix(0.2599706368108156 0 0 0.2599706368108156 164.21184944345273 87.31026708264696)"> -->
           
           <g id="shape-container"></g>
           
@@ -80,10 +80,25 @@
     </section>
     <footer id="app-footer">
       <div id="modeOptions">
-        <input type="button" value="Reg" data-mode="regular"/>
-        <input type="button" value="Skel" data-mode="transparent"/>
-        <input type="button" value="Alt" data-mode="alternate"/>
-        <input type="button" value="Invert" data-mode="invert"/>
+        <div class="option-group">
+          <div class="group-label">
+            Mode
+          </div>
+          <input type="button" class="app-button" value="Reg" data-mode="regular" />
+          <input type="button" class="app-button" value="Skel" data-mode="transparent" />
+          <input type="button" class="app-button" value="Alt" data-mode="alternate" />
+          <input type="button" class="app-button" value="Invert" data-mode="invert" />
+        </div>
+        
+        <div class="option-group">
+          <div class="group-label">
+            Blend
+          </div>
+          <input type="button" class="app-button" value="none" data-mode="blend" data-blend="none" />
+          <input type="button" class="app-button" value="multiply" data-mode="blend" data-blend="multiply" />
+          <input type="button" class="app-button" value="soft light" data-mode="blend" data-blend="soft-light" />
+          <input type="button" class="app-button" value="saturation" data-mode="blend" data-blend="saturation" />
+        </div>
       </div>
     </footer>
   </div>

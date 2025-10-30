@@ -24,6 +24,9 @@ body {
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 1fr;
   gap: 0px;
+  justify-content: center;
+  /* align-items: center; */
+  
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -41,11 +44,24 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* justify-content: flex-start; */
   align-items: center;
   gap: 4px;
   /* overflow-x: hidden; */
   overflow-y: scroll;
+}
+
+#app-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  width: 100%;
+  max-width: 600px;
+
+  height: 100%;
+  padding: 4px;
+  margin: auto;
 }
 
 
@@ -91,8 +107,42 @@ svg {
 }
 
 #modeOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 2px 4px;
+  
   input {
-    padding: 8px;
+    padding: 2px 4px;
+  }
+  
+  .option-group {
+    display: grid;
+    /* grid-template-rows: 1fr 1fr; */
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(2, 70px);
+    /* justify-content: center; */
+    /* align-items: center; */
+    gap: 4px;
+    padding: 4px;
+    /* width: fit-content !important; */
+    height: 100%;
+    background: #2C2D3594;
+    border-radius: 20px 10px 40% 10px;
+    
+    .group-label {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 0px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
   }
 }
 
@@ -101,33 +151,35 @@ svg {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   overflow: auto;
-  width: 100%;
+  /* width: 10%; */
   height: fit-content;
 }
 
 #snap-links button {}
 
-button {
+.app-button {
   /* margin: 0.5em; */
-  padding: 0.5em 0.5em;
+  padding: 0.1em 0.2em;
   border-radius: 8px;
-  border: none;
+  border: 1.5px solid #32353B;
   background: #444;
   color: #eee;
+  font-size: 15px !important;
+  font-weight: 600 !important;
   cursor: pointer;
 }
 
-button:hover {
+.app-button:hover {
   background: #666;
 }
 
-button a {
+.app-button a {
   text-decoration: none;
   color: #F4F4F4;
   font-weight: 700;
-  font-size: 16px;
+  /* font-size: 16px; */
   white-space: nowrap;
 }
 

@@ -11,7 +11,6 @@ const fpsDisplay = document.querySelector('#fps');
 
 export const animState = {
   isRunning: false,
-  
 }
 
 export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {

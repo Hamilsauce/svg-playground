@@ -15,10 +15,16 @@ const effectMode = {
   alternate: 'alternate',
   invert: 'invert',
 }
+const blendMode = {
+  saturation: 'saturation',
+  multiply: 'multiply',
+  'soft-light': 'soft-light',
+}
 
 export const animState = {
   isRunning: false,
   effectMode: effectMode.regular,
+  blendMode: blendMode.saturation,
   fillEffect: 0.8,
   invert: 0,
 }
@@ -100,7 +106,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
         style: {
           fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
           filter: `invert(${invert}) opacity(${opa2/100}) drop-shadow(0 0 10px #00000040)`,
-          'mix-blend-mode': 'soft-light',
+          'mix-blend-mode': animState.blendMode,
           // 'mix-blend-mode': 'saturation',
           // 'mix-blend-mode': 'difference',
           // 'mix-blend-mode': 'luminosity',
@@ -110,7 +116,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
           r: radius,
         }
       });
-      
+      console.warn('animState.blendMode', animState.blendMode)
       svgEl.append(circ)
       circles.push(circ)
       if (circles.length >= 50) {

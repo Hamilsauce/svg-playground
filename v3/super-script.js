@@ -134,12 +134,18 @@ modeOptions.addEventListener('click', e => {
   console.warn('mode', mode)
   if (!mode) return;
   
+  
   if (mode === 'invert') {
     animState.invert = animState.invert === 0 ? 1 : 0;
-  } else {
-    animState.fillEffect = mode;
-    
+    return;
   }
+  
+  if (mode === 'blend') {
+    animState.blendMode = target.dataset.blend;
+    return;
+  }
+  
+  animState.fillEffect = mode;
 });
 
 svg.addEventListener("pointerdown", e => {
