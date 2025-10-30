@@ -136,11 +136,19 @@ modeOptions.addEventListener('click', e => {
   // const currActive = group .querySelector('.active')
   
   buttons.forEach((el, i) => {
-    el.classList.remove('active');
+    const isTarget = el.value === target.value
+    
+    if (el.classList.contains('active') && isTarget) {
+      el.classList.remove('active');
+    } else if (isTarget) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
   });
   
-  target.classList.add('active');
-
+  // target.classList.add('active');
+  
   if (mode === 'invert') {
     animState.invert = animState.invert === 0 ? 1 : 0;
     return;

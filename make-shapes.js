@@ -37,7 +37,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let circles = [];
   let circleCounter = 0;
   let rafID = null
-  const frameSize = 8
+  const frameSize = 16
   let frameWindow = 0;
   const svgCanvas = svgEl.closest('svg')
   let opa2 = 50;

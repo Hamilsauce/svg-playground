@@ -43,13 +43,13 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let circles = [];
   let circleCounter = 0;
   let rafID = null
-  const frameSize = 0
-  let frameWindow = 0;
   const svgCanvas = svgEl.closest('svg')
   let opa2 = 50;
   let opaNeg = 1;
   let opa2Step = -2;
   let invert = 0
+  const frameSize = 0
+  let frameWindow = 0;
   
   
   const createCircle = (delta = 0) => {
@@ -80,14 +80,17 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       opaNeg = opaNeg + opa2Step;
       
       let fillEffect
+      let contrast
       
       
       switch (animState.fillEffect) {
         case 'regular':
           fillEffect = opa2 / 500;
           break;
-        case 'transparent':
+        case 'transparent':{
           fillEffect = opa2 / 10000;
+          contrast = 5
+        }    
           break;
         case 'alternate':
           fillEffect = opaNeg / 100;
@@ -105,7 +108,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {
           fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
-          filter: `invert(${invert}) opacity(${opa2/100}) drop-shadow(0 0 10px #00000040)`,
+          filter:  `invert(${invert}) opacity(${opa2/100}) drop-shadow(0 0 5px #00000020)`,
           'mix-blend-mode': animState.blendMode,
           // 'mix-blend-mode': 'saturation',
           // 'mix-blend-mode': 'difference',
@@ -116,10 +119,10 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
           r: radius,
         }
       });
-      console.warn('animState.blendMode', animState.blendMode)
+
       svgEl.append(circ)
       circles.push(circ)
-      if (circles.length >= 50) {
+      if (circles.length >= 105) {
         circles.shift().remove();
       }
     }
@@ -187,10 +190,10 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
           style: {
             fill: `hsla(${hueRotate}, 100%, 50%, ${opacity})`,
             filter: `drop-shadow(0 0 5px #00000030)`,
-      // 'mix-blend-mode': 'hard-light',
-      // 'mix-blend-mode': 'darken',
-      'mix-blend-mode': 'color',
-
+            // 'mix-blend-mode': 'hard-light',
+            // 'mix-blend-mode': 'darken',
+            'mix-blend-mode': 'color',
+            
             rx: borderRadius,
             ry: borderRadius,
           },
@@ -228,7 +231,7 @@ const rectMakerGPT = (svgEl, baseAngleStep = 0.02, baseRadius = 80, hueMod, clas
   const rects = [];
   let opacityStep = 0.0075;
   
-  const frameWindow = 24;
+  const frameWindow = 16;
   let frameSize = 0;
   
   return (delta) => {
@@ -292,7 +295,7 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   // const makeRectsGPT = rectMakerGPT(svgEl, 0.018, 100)
   
   const gptMakers = [
-    rectMakerGPT(svgEl, 0.003, 90, 0, 1, 3),
+    // rectMakerGPT(svgEl, 0.003, 90, 0, 1, 3),
     // rectMakerGPT(svgEl, 0.001, 110, 1),
     // rectMakerGPT(svgEl, -0.007, 70, 2),
     // rectMakerGPT(svgEl, 0.039, 140, 3),
@@ -317,10 +320,10 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       fpsDisplay.textContent = `fps: ${fps}`;
       
       // console.warn('maker', maker)
-      let maker = gptMakers[makerArrayIndex]
+      // let maker = gptMakers[makerArrayIndex]
       // console.warn('makerArrayIndex', makerArrayIndex)
       
-      makerArrayIndex = makerArrayIndex >= gptMakers.length - 1 ? 0 : makerArrayIndex + 1;
+      // makerArrayIndex = makerArrayIndex >= gptMakers.length - 1 ? 0 : makerArrayIndex + 1;
       // makerArrayIndex = maker ? makerArrayIndex + 1 : 0
       // await sleep(80)
       
@@ -332,7 +335,7 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       
       makeRects(delta);
       makeCircles(delta);
-      
+
       Object.assign(svgCanvas.style, getGradient());
     }
     
