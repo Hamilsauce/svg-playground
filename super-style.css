@@ -109,10 +109,10 @@ svg {
 #modeOptions {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   gap: 16px;
-  width: 100%;
+  /* width: 100%; */
   padding: 2px 4px;
   
   input {
@@ -121,15 +121,18 @@ svg {
   
   .option-group {
     display: grid;
-    /* grid-template-rows: 1fr 1fr; */
     grid-template-rows: 1fr 1fr;
-    grid-template-columns: repeat(2, 70px);
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-auto-columns: 1fr; */
+
     /* justify-content: center; */
+    
     /* align-items: center; */
     gap: 4px;
     padding: 4px;
     /* width: fit-content !important; */
     height: 100%;
+    width: 100%;
     background: #2C2D3594;
     border-radius: 20px 10px 40% 10px;
     
