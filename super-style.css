@@ -31,6 +31,10 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  
+  a {
+    color: #A9BEC6;
+  }
 }
 
 #app-header {
