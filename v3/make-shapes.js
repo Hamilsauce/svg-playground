@@ -15,6 +15,7 @@ const effectMode = {
   alternate: 'alternate',
   invert: 'invert',
 }
+
 const blendMode = {
   saturation: 'saturation',
   multiply: 'multiply',
@@ -30,6 +31,11 @@ export const animState = {
   activeShapes: {
     circle: true,
     rect: true,
+  },
+  background: {
+    filter: true,
+    gradient: true,
+    defaultFill: '#222222',
   },
 }
 
@@ -119,12 +125,14 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
           fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
           filter: `invert(${invert}) opacity(${opa2/1}) drop-shadow(0 0 5px #00000020)`,
           'mix-blend-mode': animState.blendMode,
+        isolation: 'isolate',
+
           // 'mix-blend-mode': 'saturation',
           // 'mix-blend-mode': 'difference',
           // 'mix-blend-mode': 'luminosity',
         },
         attrs: {
-          transform: `translate(${orbitX},${orbitY}) `,
+          transform: `translate(${orbitX},${orbitY}) rotate(${hueRotate+2})`,
           r: radius,
         }
       });
@@ -201,7 +209,7 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
             // 'mix-blend-mode': 'overlay',
             // 'mix-blend-mode': 'darken',
             'mix-blend-mode': 'color',
-            
+            isolation: 'isolate',
             rx: borderRadius,
             ry: borderRadius,
           },
@@ -292,13 +300,13 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   const frameSize = 24
   
   let frameWindow = 0
-  const appHeaderLeft = document.querySelector('#app-header-left')
   
   const svgCanvas = svgEl.closest('svg')
   const getGradient = initGradientMan(64)
   
   
-  const makeCircles = circleMaker(svgEl);
+  const makeCircles1 = circleMaker(svgEl);
+  const makeCircles2 = circleMaker(svgEl);
   const makeRects = rectMaker(svgEl);
   // const makeRectsGPT = rectMakerGPT(svgEl, 0.018, 100)
   
@@ -324,7 +332,6 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       currentTime = timestamp;
       
       const fps = frameRate(delta)
-      appHeaderLeft.textContent = `${Math.round(currentTime - startTime)}`;
       fpsDisplay.textContent = `fps: ${fps}`;
       
       // console.warn('maker', maker)
@@ -341,7 +348,16 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       // await sleep(100)
       // maker(delta)
       if (animState.activeShapes.circle) {
-        makeCircles(delta);
+        makeCircles1(delta);
+        if (currentTime - startTime > 1700) {
+          makeCircles2(delta);
+        }
+        if (currentTime - startTime > 5000) {
+          makeCircles2(delta);
+        }
+        if (currentTime - startTime > 6500) {
+          makeCircles2(delta);
+        }
       }
       else if (renderedShapes.circle.length) {
         renderedShapes.circle.shift().remove()
@@ -353,7 +369,14 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
         renderedShapes.rect.shift().remove()
       }
       
-      Object.assign(svgCanvas.style, getGradient());
+      const { filter: shouldFilter, gradient } = animState.background
+      
+      const { background, filter, flip } = getGradient()
+      
+      svgCanvas.style.background = gradient ? background : animState.background.defaultFill;
+      svgCanvas.style.filter = shouldFilter ? filter : null;
+      // svgCanvas.style.flip = flip
+      // Object.assign(svgCanvas.style, getGradient());
     }
     
     requestAnimationFrame(makeShapes);

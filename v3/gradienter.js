@@ -37,7 +37,7 @@ export const initGradientMan = (interval = 16) => {
     
   }, interval)
   
-  return () => ({ background: bgString, flip, transform: `invert(${invert})` })
+  return () => ({ background: bgString, flip, filter: `invert(${invert})` })
   // return (incr = 1) => {
   //   increment = incr
   //   return bgString

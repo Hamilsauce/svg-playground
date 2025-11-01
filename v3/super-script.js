@@ -14,11 +14,17 @@ const wavePath = document.getElementById("wavePath");
 const compositeDot = document.getElementById("compositeDot");
 const compositePath = document.getElementById("compositePath");
 const modeOptions = document.getElementById("modeOptions");
-console.warn('getPanZoom', getPanZoom)
 getPanZoom(svg)
 const makeShapes = initMakeShapes(shapeContainer)
 const makecircles = circleMaker(shapeContainer)
 const makeRects = rectMaker(shapeContainer)
+
+setTimeout(() => {
+console.warn('viewport.transform', viewport.getAttribute('transform'))
+  viewport.setAttribute('transform', 'translate(109.3,156.4) scale(0.62)' )
+  console.log(' ', );
+}, 1000)
+
 
 const cx = 250,
   cy = 250;
@@ -93,7 +99,6 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-console.warn('makeShapes', makeShapes)
 makeShapes()
 
 // makecircles()
@@ -154,6 +159,18 @@ modeOptions.addEventListener('click', e => {
   if (mode === 'shape') {
     animState.activeShapes[shape] = !animState.activeShapes[shape]
     target.classList.toggle('active')
+    
+    return;
+  }
+  
+  if (mode === 'filter') {
+    animState.background.filter = !animState.background.filter;
+    
+    return;
+  }
+  
+  if (mode === 'gradient') {
+    animState.background.gradient = !animState.background.gradient;
     
     return;
   }

@@ -40,18 +40,33 @@ body {
 #app-header {
   position: initial;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 80px;
+  width: 100%;
+  pointer-events: all;
+  z-index: 2;
+  background: hsla(223, 19%, 23%, 0.27);
+}
+
+#app-header-top {
+  position: initial;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  height: 80px;
-  /* width: 100%; */
-  pointer-events: all;
-  z-index: 2;
-  
-  
-  background: hsla(223, 19%, 23%, 0.27);
 }
+
+#app-header-bottom {
+  position: initial;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 
 #app-body {
   display: flex;
@@ -71,7 +86,7 @@ body {
   gap: 0px;
   width: 100%;
   max-width: 600px;
-
+  
   height: 100%;
   padding: 4px;
   margin: auto;
@@ -92,7 +107,7 @@ svg {
   left: 0;
   
   border: 1px solid #444;
-  background: #222;
+  background: #222222;
   /* margin: 1em auto; */
   display: block;
   cursor: crosshair;
@@ -127,7 +142,7 @@ svg {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   width: 100%;
   padding: 2px 4px;
   
@@ -135,12 +150,20 @@ svg {
     padding: 2px 4px;
   }
   
+  .option-group-column {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    /* align-items: center; */
+    gap: 4px;
+  }
+  
   .option-group {
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: repeat(2, 2fr);
+    grid-template-rows: fit-content 1fr;
+    /* grid-template-columns: 1fr; */
     /* grid-auto-columns: 1fr; */
-
+    
     /* justify-content: flex-start; */
     
     /* align-items: center; */
@@ -163,13 +186,60 @@ svg {
       color: #E9E9E9AB;
     }
     
+    .group-actions {
+      /* display: flex; */
+      /* flex-direction: row; */
+      /* justify-content: center; */
+      /* align-items: center; */
+      gap: 0px;
+      display: grid;
+      /* grid-template-rows: 1fr 1fr 1fr; */ 
+      /* grid-auto-columns: minmax(min-content, 1fr); */
+  /* grid-auto-rows: min-content; */
+  /* grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); */
+grid-template-columns: repeat(2, 1fr);
+
+      /* gap: 1rem; */
+      /* grid-auto-flow: column; */
+      /* grid-auto-columns: auto; */
+      width: 100%;
+
+      font-weight: 600;
+      font-size: 14px;
+      color: #E9E9E9AB;
+    }
+    
+    
+    
   }
 }
+
+/* .option-group {
+  display: grid;
+  2–3 columns depending on container width
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+  optional
+} */
+
+/* .option-group input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #888;
+  border-radius: 6px;
+  background: #f7f7f7;
+  cursor: pointer;
+} */
+
+/* .option-group input:hover {
+  background: #e6e6e6;
+} */
 
 #snap-links {
   display: flex;
   
-  display: none;
+  /* display: none; */
   
   flex-direction: row;
   justify-content: center;
@@ -194,15 +264,15 @@ svg {
   cursor: pointer;
   width: 100%;
   
-  filter: brightness(1.25) contrast(1.8) ;
-
+  filter: brightness(1.25) contrast(1.8);
+  
 }
 
 /* .app-button:hover {
   background: #666;
 } */
 .app-button.active {
-  filter: brightness(2) contrast(1.0) ;
+  filter: brightness(2) contrast(1.0);
 }
 
 .app-button a {
