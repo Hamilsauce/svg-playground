@@ -307,6 +307,8 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   
   const makeCircles1 = circleMaker(svgEl);
   const makeCircles2 = circleMaker(svgEl);
+  const makeCircles3 = circleMaker(svgEl);
+  const makeCircles4 = circleMaker(svgEl);
   const makeRects = rectMaker(svgEl);
   // const makeRectsGPT = rectMakerGPT(svgEl, 0.018, 100)
   
@@ -318,6 +320,7 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   ];
   
   let startTime = null;
+  let animWindowStart = null;
   let currentTime = 0;
   
   const makeShapes = async (timestamp = 0) => {
@@ -328,7 +331,7 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
     if (animState.isRunning && frameWindow > frameSize) {
       frameWindow = 0;
       
-      startTime = startTime === null ? timestamp : startTime;
+      animWindowStart = animWindowStart ? animWindowStart : timestamp
       currentTime = timestamp;
       
       const fps = frameRate(delta)
@@ -348,15 +351,19 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       // await sleep(100)
       // maker(delta)
       if (animState.activeShapes.circle) {
-        makeCircles1(delta);
-        if (currentTime - startTime > 1700) {
+        // makeCircles1(delta);
+        if (currentTime - animWindowStart > 20) {
+          makeCircles1(delta);
+        }
+        if (currentTime - animWindowStart > 50) {
           makeCircles2(delta);
         }
-        if (currentTime - startTime > 5000) {
-          makeCircles2(delta);
+        if (currentTime - animWindowStart > 74) {
+          makeCircles3(delta);
         }
-        if (currentTime - startTime > 6500) {
-          makeCircles2(delta);
+        if (currentTime - animWindowStart > 125) {
+          // makeCircles4(delta);
+          animWindowStart = currentTime
         }
       }
       else if (renderedShapes.circle.length) {
