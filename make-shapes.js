@@ -100,7 +100,6 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       
       const orbitMod = Math.cos(angle) * (3 * 10)
       // console.warn('fillEffect', fillEffect)
-      console.warn('animState.effectMode', animState.effectMode)
 
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {

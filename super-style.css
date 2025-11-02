@@ -52,10 +52,14 @@ body {
 #app-header-top {
   position: initial;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  /* flex-direction: row; */
+  /* justify-content: space-evenly; */
+  /* align-items: center; */
   gap: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr 40px;
+  grid-template-rows: 1fr;
+  
 }
 
 #app-header-bottom {
