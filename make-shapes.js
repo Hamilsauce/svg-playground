@@ -308,7 +308,6 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       currentTime = timestamp;
       
       const fps = frameRate(delta)
-      appHeaderLeft.textContent = `${Math.round(currentTime - startTime)}`;
       fpsDisplay.textContent = `fps: ${fps}`;
       
       // console.warn('maker', maker)
