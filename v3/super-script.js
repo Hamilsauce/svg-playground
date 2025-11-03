@@ -156,6 +156,13 @@ modeOptions.addEventListener('click', e => {
     });
   }
   
+  if (mode === 'isolate') {
+    // viewport.classList.toggle('fasttrans')
+    animState.isolate = !animState.isolate
+console.warn('animState.isolate', animState.isolate)
+    return;
+  }
+  
   if (mode === 'shape') {
     animState.activeShapes[shape] = !animState.activeShapes[shape]
     target.classList.toggle('active')

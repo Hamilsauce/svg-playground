@@ -28,6 +28,7 @@ export const animState = {
   blendMode: blendMode.saturation,
   fillEffect: 0.8,
   invert: 0,
+  isolate: true,
   activeShapes: {
     circle: true,
     rect: true,
@@ -63,70 +64,77 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let opaNeg = 1;
   let opa2Step = -2;
   let invert = 0
-  const frameSize = 0
+  const frameSize = 16
   let frameWindow = 0;
   
   
   const createCircle = (delta = 0) => {
     frameWindow += delta
     
+    // if (animState.isRunning && frameWindow > frameSize) {
+    // frameWindow = 0
+    
+    
+    angle += angleStep;
+    t += tStep;
+    hueRotate++
+    
+    opacityStep = opacity > 0.8 || opacity <= 0.1 ? -opacityStep : opacityStep;
+    opacity = opacity + opacityStep;
+    radiusStep = radius > 200 || radius <= 25 ? -radiusStep : radiusStep;
+    radius = radius + radiusStep;
+    
+    orbitStep = cx >= 100 || cx <= 50 ? -orbitStep : orbitStep;
+    cx = cx + orbitStep;
+    cy = cy + orbitStep;
+    
+    
+    if (opa2 >= 80 || opa2 <= 20) {
+      opa2Step = -opa2Step
+    }
+    
+    opa2 = opa2 + opa2Step;
+    opaNeg = opaNeg + opa2Step;
+    
+    let fillEffect
+    let contrast
+    
+    
+    switch (animState.fillEffect) {
+      case 'regular':
+        fillEffect = opa2 / 100;
+        break;
+      case 'transparent': {
+        fillEffect = opa2 / 10000;
+        contrast = 5
+      }
+      break;
+      case 'alternate':
+        fillEffect = opaNeg / 100;
+        break;
+        
+      default:
+        fillEffect = opa2 / 100;
+    }
+    
+    let invert = animState.invert
+    
+    const rand = Math.random() * 10
+    const orbitX = cx + 50 * Math.cos(angle);
+    const orbitY = cy + 50 * Math.sin(angle);
+    
     if (animState.isRunning && frameWindow > frameSize) {
       frameWindow = 0
       
-      angle += angleStep;
-      t += tStep;
-      hueRotate++
       
-      opacityStep = opacity > 0.8 || opacity <= 0.1 ? -opacityStep : opacityStep;
-      opacity = opacity + opacityStep;
-      radiusStep = radius > 200 || radius <= 25 ? -radiusStep : radiusStep;
-      radius = radius + radiusStep;
-      
-      orbitStep = cx >= 100 || cx <= 50 ? -orbitStep : orbitStep;
-      cx = cx + orbitStep;
-      cy = cy + orbitStep;
-      
-      
-      if (opa2 >= 80 || opa2 <= 20) {
-        opa2Step = -opa2Step
-      }
-      
-      opa2 = opa2 + opa2Step;
-      opaNeg = opaNeg + opa2Step;
-      
-      let fillEffect
-      let contrast
-      
-      
-      switch (animState.fillEffect) {
-        case 'regular':
-          fillEffect = opa2 / 100;
-          break;
-        case 'transparent': {
-          fillEffect = opa2 / 10000;
-          contrast = 5
-        }
-        break;
-        case 'alternate':
-          fillEffect = opaNeg / 100;
-          break;
-          
-        default:
-          fillEffect = opa2 / 100;
-      }
-      
-      let invert = animState.invert
-      
-      const rand = Math.random() * 10
-      const orbitX = cx + 50 * Math.cos(angle);
-      const orbitY = cy + 50 * Math.sin(angle);
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {
           fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
           filter: `invert(${invert}) opacity(${opa2/1}) drop-shadow(0 0 5px #00000020)`,
           'mix-blend-mode': animState.blendMode,
-        isolation: 'isolate',
-
+          isolation: animState.isolate ? 'isolate' : null,
+          // isolation: 'isolate',
+          
           // 'mix-blend-mode': 'saturation',
           // 'mix-blend-mode': 'difference',
           // 'mix-blend-mode': 'luminosity',
@@ -136,10 +144,10 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
           r: radius,
         }
       });
-      
+      // console.warn('animState.isolate', animState.isolate)
       svgEl.append(circ)
       renderedShapes.circle.push(circ)
-      if (renderedShapes.circle.length >= 105) {
+      if (renderedShapes.circle.length >= 60) {
         renderedShapes.circle.shift().remove();
       }
     }

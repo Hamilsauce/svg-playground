@@ -123,10 +123,16 @@ svg {
 }
 
 #viewport {
-  /* transition: 11.5s; */
-  
+  isolation: isolate;
+  mix-blend-mode: luminosity;
+
   * {
-    transition: 9.5s;
+    transition: 5.5s !important;
+  }
+}
+#viewport.fasttrans {
+  * {
+    /* transition: 0.5s !important; */
   }
 }
 
