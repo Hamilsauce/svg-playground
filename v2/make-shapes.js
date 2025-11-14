@@ -1,5 +1,4 @@
 import { getSVGTemplate, initCalculateFPS } from './utils.js';
-import { opacityLFO, runModulation } from './effects/modulators.js';
 import { initGradientMan } from './gradienter.js';
 import { frameRate } from './frame-rate.js';
 import ham from 'https://hamilsauce.github.io/hamhelper/hamhelper1.0.0.js';
@@ -31,21 +30,20 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let orbitStep = 2;
   let cx = 200;
   let cy = 200;
-  let radius = 4;
+  let radius = 51;
   let radiusStep = 1;
   let opacityStep = 0.0075;
   let opacity = 0.5;
   let circles = [];
   let circleCounter = 0;
   let rafID = null
-  const frameSize = 16
+  const frameSize = 0
   let frameWindow = 0;
   const svgCanvas = svgEl.closest('svg')
   let opa2 = 50;
   let opaNeg = 1;
   let opa2Step = -2;
   let invert = 0
-  let orbitModLong = 0
   
   
   const createCircle = (delta = 0) => {
@@ -60,27 +58,27 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       
       opacityStep = opacity > 0.5 || opacity <= 0.1 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
-      radiusStep = radius > 150 || radius <= 3 ? -radiusStep : radiusStep;
+      radiusStep = radius > 200 || radius <= 25 ? -radiusStep : radiusStep;
       radius = radius + radiusStep;
       
-      orbitStep = cx >= 100 || cx <= 40 ? -orbitStep : orbitStep;
+      orbitStep = cx >= 100 || cx <= 50 ? -orbitStep : orbitStep;
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
       
-      if (opa2 >= 100 || opa2 <= 0) {
+      if (opa2 >= 70 || opa2 <= 0) {
         opa2Step = -opa2Step
       }
       
-      opa2 = opa2 + opa2Step
-      opaNeg = opaNeg + opa2Step
+      opa2 = opa2 + opa2Step;
+      opaNeg = opaNeg + opa2Step;
       
       let fillEffect
       
       
-      switch (animState.effectMode) {
+      switch (animState.fillEffect) {
         case 'regular':
-          fillEffect = opa2 / 100;
+          fillEffect = opa2 / 500;
           break;
         case 'transparent':
           fillEffect = opa2 / 10000;
@@ -96,27 +94,26 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       let invert = animState.invert
       
       const rand = Math.random() * 10
-      const orbitX = cx + 25 * Math.cos(angle);
-      const orbitY = cy + 25 * Math.sin(angle);
-      
-      const orbitMod = Math.cos(angle) * (3 * 10)
-      // console.warn('fillEffect', fillEffect)
-      
+      const orbitX = cx + 50 * Math.cos(angle);
+      const orbitY = cy + 50 * Math.sin(angle);
       const circ = getSVGTemplate(svgCanvas, 'basic-circle', {
         style: {
           fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
-          filter: `invert(${invert}) opacity(${opa2}) drop-shadow(0 0 5px #00000030)`,
+          filter: `invert(${invert}) opacity(${opa2/100}) drop-shadow(0 0 10px #00000040)`,
+          'mix-blend-mode': 'soft-light',
+          // 'mix-blend-mode': 'saturation',
+          // 'mix-blend-mode': 'difference',
+          // 'mix-blend-mode': 'luminosity',
         },
         attrs: {
-          // transform: `translate(${orbitX+(orbitMod/2)},${orbitY-(orbitMod/2)}) `,
-          transform: `translate(${orbitX-(orbitMod)},${orbitY+(orbitMod)}) `,
+          transform: `translate(${orbitX},${orbitY}) `,
           r: radius,
         }
       });
       
       svgEl.append(circ)
       circles.push(circ)
-      if (circles.length >= 200) {
+      if (circles.length >= 50) {
         circles.shift().remove();
       }
     }
@@ -131,8 +128,8 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   let hueRotate = 180;
   let angle = 0;
   let t = 0;
-  let cx = 150;
-  let cy = 150;
+  let cx = 250;
+  let cy = 250;
   let radius = 41;
   let radiusStep = 0.9;
   let opacityStep = 0.0075;
@@ -164,19 +161,19 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       opacityStep = opacity > 0.6 || opacity <= 0.1 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
       
-      radiusStep = radius > 60 || radius <= 40 ? -radiusStep : radiusStep;
+      radiusStep = radius > 180 || radius <= 12 ? -radiusStep : radiusStep;
       radius = radius + radiusStep;
       
       rotoMod = rotoMod === 2 ? 6 : 2
       
       borderRadiusStep = borderRadius >= 20 || borderRadius <= 0 ? -borderRadiusStep : borderRadiusStep;
       borderRadius = borderRadius + borderRadiusStep;
-      orbitStep = cx >= 250 || cx <= 100 ? -orbitStep : orbitStep;
+      orbitStep = cx >= 100 || cx <= 25 ? -orbitStep : orbitStep;
       
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
-      if (rects.length <= 150) {
+      if (rects.length <= 20) {
         const orbitX = cx + 100 * Math.cos(angle);
         const orbitY = cy + 100 * Math.sin(angle);
         
@@ -184,6 +181,10 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
           style: {
             fill: `hsla(${hueRotate}, 100%, 50%, ${opacity})`,
             filter: `drop-shadow(0 0 5px #00000030)`,
+            // 'mix-blend-mode': 'hard-light',
+            // 'mix-blend-mode': 'darken',
+            'mix-blend-mode': 'color',
+            
             rx: borderRadius,
             ry: borderRadius,
           },
@@ -221,7 +222,7 @@ const rectMakerGPT = (svgEl, baseAngleStep = 0.02, baseRadius = 80, hueMod, clas
   const rects = [];
   let opacityStep = 0.0075;
   
-  const frameWindow = 16;
+  const frameWindow = 24;
   let frameSize = 0;
   
   return (delta) => {
@@ -242,7 +243,7 @@ const rectMakerGPT = (svgEl, baseAngleStep = 0.02, baseRadius = 80, hueMod, clas
     opacityStep = opacity > 0.4 || opacity <= 0.1 ? -opacityStep : opacityStep;
     opacity = opacity + opacityStep;
     
-    if (rects.length <= 100) {
+    if (rects.length <= 5) {
       
       const rect = getSVGTemplate(svgEl.closest('svg'), 'basic-rect', {
         style: {
@@ -277,7 +278,7 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   const appHeaderLeft = document.querySelector('#app-header-left')
   
   const svgCanvas = svgEl.closest('svg')
-  const getGradient = initGradientMan(200)
+  const getGradient = initGradientMan(64)
   
   
   const makeCircles = circleMaker(svgEl);
@@ -285,7 +286,7 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
   // const makeRectsGPT = rectMakerGPT(svgEl, 0.018, 100)
   
   const gptMakers = [
-    // rectMakerGPT(svgEl, 0.003, 90, 0, 1, 3),
+    rectMakerGPT(svgEl, 0.003, 90, 0, 1, 3),
     // rectMakerGPT(svgEl, 0.001, 110, 1),
     // rectMakerGPT(svgEl, -0.007, 70, 2),
     // rectMakerGPT(svgEl, 0.039, 140, 3),
@@ -306,13 +307,14 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       currentTime = timestamp;
       
       const fps = frameRate(delta)
+      appHeaderLeft.textContent = `${Math.round(currentTime - startTime)}`;
       fpsDisplay.textContent = `fps: ${fps}`;
       
       // console.warn('maker', maker)
-      // let maker = gptMakers[makerArrayIndex]
+      let maker = gptMakers[makerArrayIndex]
       // console.warn('makerArrayIndex', makerArrayIndex)
       
-      // makerArrayIndex = makerArrayIndex >= gptMakers.length - 1 ? 0 : makerArrayIndex + 1;
+      makerArrayIndex = makerArrayIndex >= gptMakers.length - 1 ? 0 : makerArrayIndex + 1;
       // makerArrayIndex = maker ? makerArrayIndex + 1 : 0
       // await sleep(80)
       
@@ -322,9 +324,10 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
       // await sleep(100)
       // maker(delta)
       
+      makeRects(delta);
       makeCircles(delta);
       
-      Object.assign(svgCanvas.style, getGradient());
+      // Object.assign(svgCanvas.style, getGradient());
     }
     
     requestAnimationFrame(makeShapes);

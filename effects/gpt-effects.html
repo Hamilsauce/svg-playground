@@ -1,0 +1,133 @@
+<!-- <svg width="400" height="200" viewBox="0 0 400 200">
+  <circle cx="200" cy="100" r="50" fill="cornflowerblue" />
+  <rect x="100" y="80" width="200" height="40" fill="tomato" opacity="0.5" />
+</svg> -->
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <title>gpt effects</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.min.js" integrity="sha512-y3JTS47nnpKORJX8Jn1Rlm+QgRIIZHtu3hWxal0e81avPrqUH48yk+aCi+gprT0RMAcpYa0WCkapxe+bpBHD6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+  <div id="app">
+    <header id="app-header">
+      <div id="app-header-left">L</div>
+      <div id="app-header-center">
+        <h1>gpt effects</h1>
+      </div>
+      <div id="app-header-right">R</div>
+    </header>
+    <section id="app-body">
+      <svg id="svg-canvas" width="412" height="690" viewBox="-0 -0 400 200" preserveAspectRatio="xMidYMid meet" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <g id="circle-container">
+            <circle id="circle-template" fill="teal" cx="0" cy="0" r=" 10" stroke="#000000" stroke-width="1" transform="translate(0,0) rotate(0) scale(1)" />
+          </g>
+          
+        </defs>
+        
+        <g id="viewport" transform="translate(0,0) rotate(0) scale(1)">
+          <g id="scene" transform="translate(0,0) rotate(0) scale(1)">
+            <rect id="surface" x="0" y="0" rx="0" ry="0" width="412" height="690" fill="#C7C7C7"></rect>
+            <circle id="circle" cx="200" cy="100" r="50" fill="cornflowerblue" />
+            <rect id="rect" x="100" y="80" width="200" height="40" fill="tomato" opacity="0.5" />
+            
+          </g>
+        </g>
+        
+      </svg>
+    </section>
+    <footer id="app-footer">
+      <div class="container">
+        footer
+      </div>
+    </footer>
+  </div>
+  <script src="./script.js" type="module"></script>
+  <script>
+    /*-------------------------
+  1.  Basic modulators
+--------------------------*/
+    function* sineLFO({ freq = 1, amp = 1, offset = 0 } = {}) {
+      const TWO_PI = Math.PI * 2;
+      let t = 0;
+      
+      while (true) {
+        yield offset + Math.sin(t * TWO_PI * freq) * amp;
+        t += 1 / 60;
+      }
+    }
+    
+    function* randomWalk({ step = 0.02, amp = 1, offset = 0 } = {}) {
+      let value = offset;
+      
+      while (true) {
+        value += (Math.random() - 0.5) * step;
+        value = Math.max(-amp, Math.min(amp, value));
+        yield value;
+      }
+    }
+    
+    /*-------------------------
+      2.  Binding logic
+    --------------------------*/
+    function bind(generator, element, attr, transform = v => v) {
+      return () => {
+        const { value } = generator.next();
+        element.setAttribute(attr, transform(value));
+      };
+    }
+    
+    /*-------------------------
+      3.  Setup scene
+    --------------------------*/
+    const circle = document.querySelector('#circle');
+    const rect = document.querySelector('#rect');
+    
+    const circleRadius = bind(
+      sineLFO({ freq: 0.25, amp: 20, offset: 50 }),
+      circle,
+      'r',
+      v => v.toFixed(2)
+    );
+    
+    const rectX = bind(
+      randomWalk({ step: 15, amp: 100, offset: -100 }),
+      rect,
+      'x',
+      v => 150 + v
+    );
+    
+    const rectOpacity = bind(
+      sineLFO({ freq: 0.5, amp: 0.3, offset: 0.5 }),
+      rect,
+      'opacity'
+    );
+    
+    /*-------------------------
+      4.  Animation clock
+    --------------------------*/
+    const updaters = [circleRadius, rectX, rectOpacity];
+    
+    function animate() {
+      updaters.forEach(update => update());
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+  </script>
+  
+</body>
+
+</html>

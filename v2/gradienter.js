@@ -15,11 +15,11 @@ export const initGradientMan = (interval = 16) => {
     const perc1 = Math.round(Math.random() * 100)
     const perc2 = 100 - perc1
     
-    if (p1 <= 100 && !flip) { p1 = p1 + 0.1 }
-    else if (p1 >= 0 && flip) { p1 = p1 - 0.1 }
+    if (p1 <= 100 && !flip) { p1 = p1 + 0.3 }
+    else if (p1 >= 0 && flip) { p1 = p1 - 0.3 }
     
-    if (p2 <= 100 && flip) { p2 = p2 + 0.1 }
-    else if (p2 >= 0 && !flip) { p2 = p2 - 0.1 }
+    if (p2 <= 100 && flip) { p2 = p2 + 0.3 }
+    else if (p2 >= 0 && !flip) { p2 = p2 - 0.3 }
     
     if (p1 >= 100 || p1 < 0 || p2 >= 100 || p2 < 0) {
       flip = !flip
@@ -27,11 +27,11 @@ export const initGradientMan = (interval = 16) => {
     
     
     rotation += increment + 1 //(perc1 / 2)
-    roto1 = roto1 + Math.round(roto1 + 1)
-    roto2 = roto2 + Math.round(roto2 + 1)
-    hsla1 = `hsla(${roto1}, 100%, 50%, 1)`;
-    hsla2 = `hsla(${-roto2}, 50%, 50%, 1)`;
-    bgString = `linear-gradient(${rotation}deg, ${hsla1} ${25}%, ${hsla2} ${75}%)`
+    roto1 = Math.round(roto1 + 1)
+    roto2 = Math.round(roto2 + 1)
+    hsla1 = `hsla(${roto1}, 55%, 50%, 0.7)`;
+    hsla2 = `hsla(${-roto2}, 50%, 40%, 0.7)`;
+    bgString = `linear-gradient(${rotation+77}deg, ${hsla1} ${1}%, ${hsla2} ${80}%)`
     
     postMessage({ bgString, flip, invert: `invert(${invert})` })
     

@@ -27,11 +27,11 @@ export const initGradientMan = (interval = 16) => {
     
     
     rotation += increment + 1 //(perc1 / 2)
-    roto1 = Math.round(roto1 + 1)
-    roto2 = Math.round(roto2 + 1)
-    hsla1 = `hsla(${roto1}, 50%, 60%, 0.6)`;
-    hsla2 = `hsla(${-roto2}, 50%, 40%, 0.7)`;
-    bgString = `linear-gradient(${rotation+77}deg, ${hsla1} ${20}%, ${hsla2} ${100}%)`
+    roto1 = roto1 - 2 // rotation // Math.round(roto1)
+    roto2 = roto2 + 0.5 // rotation // Math.round(roto2)
+    hsla1 = `hsla(${roto1}, 100%, 60%, 0.6)`;
+    hsla2 = `hsla(${roto2}, 80%, 40%, 0.7)`;
+    bgString = `linear-gradient(${rotation+77}deg, ${hsla1} ${30}%, ${hsla2} ${90}%)`
     
     postMessage({ bgString, flip, invert: `invert(${invert})` })
     

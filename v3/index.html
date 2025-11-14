@@ -18,81 +18,19 @@
     <header id="app-header">
       
       <div id="app-header-top">
-        <div id="app-header-top-left">L</div>
+        <div id="app-header-top-left">
+          <div id="last-point"></div>
+
+        </div>
         <div id="app-header-top-center">
-          <h2>nutso v3</h2>
-          <!-- <a href="https://hamilsauce.github.io/svg-playground/v3">
-            <h1>go to nutso v3 here</h1>
-          </a> -->
+          <h3>nutso v3</h3>
         </div>
         <div id="app-header-top-right">
           <div id="fps"></div>
+          <div id="shape-count"></div>
         </div>
       </div>
-      <div id="app-header-bottom">
-        <div id="snap-links">
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap1.html">
-              saved 1
-            </a>
-          </button>
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap2.html">
-              saved 2
-            </a>
-          </button>
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap3.html">
-              saved 3
-            </a>
-          </button>
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap4.html">
-              saved 4
-            </a>
-          </button>
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap5.html">
-              saved 5
-            </a>
-          </button>
-        </div>
-      </div>
-      
-      <!-- <div id="app-header-center">
-        <div id="snap-links">
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap1.html">
-              saved 1
-            </a>
-          </button>
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap2.html">
-              saved 2
-            </a>
-          </button>
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap3.html">
-              saved 3
-            </a>
-          </button>
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap4.html">
-              saved 4
-            </a>
-          </button>
-          <button class="app-button" type="button">
-            <a href="https://hamilsauce.github.io/svg-playground/snaps/svg-snap5.html">
-              saved 5
-            </a>
-          </button>
-        </div>
-      </div> -->
-      
-      
-      <!-- <div id="app-header-right">
-        <div id="fps"></div>
-      </div> -->
+      <div id="app-header-bottom"></div>
     </header>
     <section id="app-body">
       <svg id="demo" width="100%" height="100%" viewBox="-100 0 600 600" preserveAspectRatio="xMidYMid meet">
@@ -100,6 +38,10 @@
           <circle data-template="basic-circle" class="basic-circle" r="12" opacity="0.7" />
           <rect data-template="basic-rect" class="basic-rect" width="24" height="24" />
           <line data-template="basic-line" class="basic-line" x1="0" y1="0" x2="24" y2="24" />
+          
+          <g data-template="plot-line" class="plot-line" transform="translate(0,0) rotate(0) scale(1)">
+            <polyline class="plot-line" points="" />
+          </g>
           
         </defs>
         
@@ -127,6 +69,7 @@
             <div class="group-actions">
               <input type="button" class="app-button active" value="circs" data-mode="shape" data-shape="circle" />
               <input type="button" class="app-button active" value="rects" data-mode="shape" data-shape="rect" />
+              <input type="button" class="app-button active" value="pline" data-mode="shape" data-shape="polyline" />
             </div>
           </div>
           <div class="option-group" data-group-name="shapes">
@@ -134,6 +77,9 @@
             <div class="group-actions">
               <input type="button" class="app-button active" value="grad" data-mode="gradient" />
               <input type="button" class="app-button active" value="filter" data-mode="filter" />
+              <input type="button" class="app-button active" value="transition" data-mode="transition" />
+              <input type="button" class="app-button active" value="follow" data-mode="follow" />
+
             </div>
           </div>
         </div>
@@ -145,6 +91,7 @@
             <input type="button" class="app-button" value="ribs" data-mode="transparent" />
             <input type="button" class="app-button" value="alt" data-mode="alternate" />
             <input type="button" class="app-button" value="invert" data-mode="invert" />
+            <input type="button" class="app-button" value="blur" data-mode="blur" />
             <input type="button" class="app-button" value="isolate" data-mode="isolate" />
           </div>
         </div>
