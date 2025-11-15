@@ -216,7 +216,8 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
 				fillEffect = opa2 / 100;
 		}
 		
-		 blur = animState.blur ? '10px' : '0.05px'
+		// const rand = Math.random() * 10
+		blur = animState.blur ? '10px' : '0.05px'
 		const transition = animState.transition ? '3.25s ease-out !important' : '0.125s ease-out !important'
 		// const shouldNegativeOrbit1 = Math.random() >= 0.5 ? 1 : -1;
 		// const shouldNegativeOrbit2 = Math.random() >= 0.5 ? 1 : -1;;
@@ -253,6 +254,12 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
 			currentCirc = buffer.next();
 			
 			const strokeWidth = opacity * (Math.random() * 100);
+			// 	blur = animState.blur ? '10px' : '0.05px'
+			// const transition = animState.transition ? '3.25s ease-out !important' : '0.125s ease-out !important'
+			// let invert = animState.invert
+			// const rand = Math.random() * 10
+			
+			
 			applyAttributes(currentCirc, {
 				style: {
 					fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
@@ -392,7 +399,15 @@ export const polylinerMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
 	let rotoMod = 2
 	const svgCanvas = svgEl.closest('svg')
 	
-	const frameSize = 0
+	let opa2 = 50;
+	let opaNeg = 1;
+	let opa2Step = -2;
+	let blurStep = 0.25;
+	let blur = '0px';
+	let invert = 0
+	
+	
+	const frameSize = 256
 	let frameWindow = 0;
 	
 	const polyline = createPlotline(svgEl, [])
@@ -421,10 +436,61 @@ export const polylinerMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
 		orbitX = cx * Math.cos(angle);
 		orbitY = cy * Math.sin(angle);
 		
+		if (opa2 >= 80 || opa2 <= 10) {
+			opa2Step = -opa2Step
+		}
+		
+		opa2 = opa2 + opa2Step;
+		opaNeg = opaNeg + opa2Step;
+		
+		let fillEffect
+		let contrast
+		
+		switch (animState.fillEffect) {
+			case 'regular':
+				fillEffect = opa2 / 200;
+				break;
+			case 'transparent': {
+				fillEffect = opa2 / 10000;
+				contrast = 5
+			}
+			break;
+			case 'alternate':
+				fillEffect = opaNeg / 10;
+				break;
+			default:
+				fillEffect = opa2 / 100;
+		}
+		
+		
+		const rand = Math.random() * 10
+		const strokeWidth = opacity * (Math.random() * 10);
+		blur = animState.blur ? '10px' : '0.05px'
+		const transition = animState.transition ? '10.25s ease-out !important' : '1.125s ease-out !important'
+		let invert = animState.invert
+		animState.lastPoint = polyline.appendPoint({ x: orbitX, y: orbitY })
 		
 		if (animState.isRunning && frameWindow > frameSize) {
 			frameWindow = 0
-			animState.lastPoint = polyline.appendPoint({ x: orbitX, y: orbitY })
+			
+			
+			applyAttributes(polyline.firstElementChild, {
+				style: {
+					fill: `hsla(${hueRotate - rand}, 100%, 50%, ${fillEffect})`,
+					stroke: `#hsla(${-hueRotate-1}, ${frameWindow}%, 100%, ${opa2/100})`,
+					strokeWidth,
+					
+					filter: `blur(${blur}) invert(${invert}) opacity(${opa2/10}) drop-shadow(0 0 5px #00000030)`,
+					'mix-blend-mode': animState.blendMode,
+					isolation: animState.isolate ? 'isolate' : null,
+					transition,
+				},
+				attrs: {
+					// transform: `translate(${orbitX},${orbitY}) rotate(${0})`,
+					// r: radius - strokeWidth,
+				}
+			});
+			
 		}
 	}
 	
@@ -504,8 +570,8 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
 	const lastPointDisplay = document.getElementById("last-point");
 	
 	const makeCircles1 = circleMaker(svgEl);
-	const makeCircles2 = circleMaker(svgEl, 2, 0.02);
-	const makeCircles3 = circleMaker(svgEl, 0.04, 0.1);
+	// const makeCircles2 = circleMaker(svgEl, 2, 0.02);
+	// const makeCircles3 = circleMaker(svgEl, 0.04, 0.1);
 	// const makeCircles4 = circleMaker(svgEl);
 	// const makeRects = rectMaker(svgEl);
 	// const makeRectsGPT = rectMakerGPT(svgEl, 0.018, 100)
@@ -557,10 +623,8 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
 				const { x, y } = animState.lastPoint
 				lastPointDisplay.textContent = `${Math.round(x)}, ${Math.round(y)}`
 				
-				if (animState.follow && currentTime - animWindowStart > 66) {
-					
-					// console.warn('x, y', x, y)
-					viewport.setAttribute('transform', `translate(${-(x)},${y})`)
+				if (animState.follow && currentTime - animWindowStart > 0) {
+					viewport.setAttribute('transform', `translate(${(x)},${y})`)
 				}
 				
 			}
@@ -568,17 +632,19 @@ export const initMakeShapes = (svgEl, angleStep = 0.02, tStep = 0.05) => {
 			if (animState.activeShapes.circle) {
 				makeCircles1(delta);
 				if (currentTime - animWindowStart > 20) {
+					
 				}
 				if (currentTime - animWindowStart > 60) {
 					// makeCircles2(delta);
-					makeCircles3(delta);
+					// makeCircles3(delta);
 					
 				}
 				if (currentTime - animWindowStart > 66) {
 					
 				}
+				
 				if (currentTime - animWindowStart > 120) {
-					makeCircles2(delta);
+					// makeCircles2(delta);
 					
 					// makeCircles4(delta);
 					animWindowStart = currentTime
