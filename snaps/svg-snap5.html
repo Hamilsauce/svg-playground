@@ -2,8 +2,14 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <title>snap5</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.min.js" integrity="sha512-y3JTS47nnpKORJX8Jn1Rlm+QgRIIZHtu3hWxal0e81avPrqUH48yk+aCi+gprT0RMAcpYa0WCkapxe+bpBHD6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="../super-style.css" />
   <style>
     * {
@@ -11,7 +17,7 @@
       padding: 0;
       margin: 0;
       z-index: 0;
-      /* touch-action: none; */
+      touch-action: none;
     }
     
     html {
@@ -52,11 +58,19 @@
       overflow-y: scroll;
     }
   </style>
-  <title></title>
 </head>
 
 <body>
-  <svg id="demo" width="100%" height="100%" viewBox="-100 0 600 600" preserveAspectRatio="xMidYMid meet" style="background: linear-gradient(1002deg, rgba(198, 181, 57, 0.7) 25%, rgba(51, 87, 153, 0.7) 75%);">
+  <div id="app">
+    <header id="app-header">
+      <div id="app-header-left">L</div>
+      <div id="app-header-center">
+        <h1>snap5</h1>
+      </div>
+      <div id="app-header-right">R</div>
+    </header>
+    <section id="app-body">
+        <svg id="demo" width="100%" height="100%" viewBox="-100 0 600 600" preserveAspectRatio="xMidYMid meet" style="background: linear-gradient(1002deg, rgba(198, 181, 57, 0.7) 25%, rgba(51, 87, 153, 0.7) 75%);">
     <defs id="templates">
       <circle data-template="basic-circle" class="basic-circle" r="12" opacity="0.7"></circle>
       <rect data-template="basic-rect" class="basic-rect" width="24" height="24"></rect>
@@ -278,11 +292,309 @@
       <!-- <circle id="compositeDot" r="12" fill="transparent" opacity="0.7" /> -->
     </g>
   </svg>
+    </section>
+    <footer id="app-footer">
+      <div class="container">
+        footer
+      </div>
+    </footer>
+  </div>
   <script type="module">
     import ham from 'https://hamilsauce.github.io/hamhelper/hamhelper1.0.0.js';
     const { template, getPanZoom } = ham;
     const svg = document.getElementById("demo");
-  
+    
+    getPanZoom(svg)
+  </script>
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../super-style.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      z-index: 0;
+      touch-action: none;
+    }
+    
+    html {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+    }
+    
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+    
+    #app {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      grid-template-columns: 1fr;
+      gap: 0px;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    #app-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0px;
+    }
+    
+    #app-body {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 0px;
+      overflow-y: scroll;
+    }
+  </style>
+  <title></title>
+</head>
+
+<body>
+  <svg id="demo" width="100%" height="100%" viewBox="-100 0 600 600" preserveAspectRatio="xMidYMid meet" style="background: linear-gradient(1002deg, rgba(198, 181, 57, 0.7) 25%, rgba(51, 87, 153, 0.7) 75%);">
+    <defs id="templates">
+      <circle data-template="basic-circle" class="basic-circle" r="12" opacity="0.7"></circle>
+      <rect data-template="basic-rect" class="basic-rect" width="24" height="24"></rect>
+      <line data-template="basic-line" class="basic-line" x1="0" y1="0" x2="24" y2="24"></line>
+      
+    </defs>
+    
+    <g style="filter: invert(1)" id="viewport" transform="matrix(0.6925262015790509 0 0 0.6925262015790509 -14.703776906023819 -145.579489687592)" class="">
+      <!-- <g id=viewport transform="matrix(0.2599706368108156 0 0 0.2599706368108156 164.21184944345273 87.31026708264696)"> -->
+      
+      <g style="filter: invert(1)" id="shape-container" transform="scale(4) translate(-175, -59)">
+        <circle class="basic-circle" r="98" opacity="0.7" data-type="basic-circle" transform="translate(199.73022289718637,226.58224625124686) " style="fill: rgba(255, 93, 0, 0.7); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="99" opacity="0.7" data-type="basic-circle" transform="translate(197.83012452852338,224.00481982472277) " style="fill: rgba(255, 92, 0, 0.68); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="100" opacity="0.7" data-type="basic-circle" transform="translate(199.93009410778402,225.41699181699514) " style="fill: rgba(255, 135, 0, 0.66); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="101" opacity="0.7" data-type="basic-circle" transform="translate(198.0300916484695,222.81899735142935) " style="fill: rgba(255, 116, 0, 0.64); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="102" opacity="0.7" data-type="basic-circle" transform="translate(200.1300771528968,224.2110756178386) " style="fill: rgba(255, 108, 0, 0.62); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="103" opacity="0.7" data-type="basic-circle" transform="translate(198.23001062819728,221.5934697768107) " style="fill: rgba(255, 144, 0, 0.6); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="104" opacity="0.7" data-type="basic-circle" transform="translate(200.32985210231323,222.96642686244752) " style="fill: rgba(255, 142, 0, 0.58); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="105" opacity="0.7" data-type="basic-circle" transform="translate(198.42956163998628,220.33019768355427) " style="fill: rgba(255, 121, 0, 0.56); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="106" opacity="0.7" data-type="basic-circle" transform="translate(200.52909935873066,221.68503672331966) " style="fill: rgba(255, 136, 0, 0.54); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="107" opacity="0.7" data-type="basic-circle" transform="translate(198.62842544478616,219.03120203752565) " style="fill: rgba(255, 148, 0, 0.52); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="108" opacity="0.7" data-type="basic-circle" transform="translate(200.72750016904268,220.3689551513289) " style="fill: rgba(255, 165, 0, 0.5); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="109" opacity="0.7" data-type="basic-circle" transform="translate(198.8262839029314,217.69856095465406) " style="fill: rgba(255, 150, 0, 0.48); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="110" opacity="0.7" data-type="basic-circle" transform="translate(200.92473713427592,219.02028759624136) " style="fill: rgba(255, 163, 0, 0.46); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="111" opacity="0.7" data-type="basic-circle" transform="translate(199.02282048309644,216.3344063763906) " style="fill: rgba(255, 172, 0, 0.44); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="112" opacity="0.7" data-type="basic-circle" transform="translate(201.1204947173611,217.64119163844478) " style="fill: rgba(255, 177, 0, 0.42); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="113" opacity="0.7" data-type="basic-circle" transform="translate(199.21772076867856,214.94092065905636) " style="fill: rgba(255, 188, 0, 0.4); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="114" opacity="0.7" data-type="basic-circle" transform="translate(201.3144597479246,216.23387353728026) " style="fill: rgba(255, 161, 0, 0.38); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="115" opacity="0.7" data-type="basic-circle" transform="translate(199.41067296079737,213.52033308253795) " style="fill: rgba(255, 191, 0, 0.36); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="116" opacity="0.7" data-type="basic-circle" transform="translate(201.50632192329454,214.80058470149768) " style="fill: rgba(255, 197, 0, 0.34); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="117" opacity="0.7" data-type="basic-circle" transform="translate(199.60136837710644,212.07491628391531) " style="fill: rgba(255, 194, 0, 0.32); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="118" opacity="0.7" data-type="basic-circle" transform="translate(201.69577430491876,213.34361808748244) " style="fill: rgba(255, 190, 0, 0.3); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="119" opacity="0.7" data-type="basic-circle" transform="translate(199.78950194561918,210.60698262172707) " style="fill: rgba(255, 202, 0, 0.28); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="120" opacity="0.7" data-type="basic-circle" transform="translate(201.88251380940102,211.8653045310139) " style="fill: rgba(255, 220, 0, 0.26); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="121" opacity="0.7" data-type="basic-circle" transform="translate(199.97477269275893,209.11888047669026) " style="fill: rgba(255, 183, 0, 0.24); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="122" opacity="0.7" data-type="basic-circle" transform="translate(202.06624169336976,210.3680090184257) " style="fill: rgba(255, 226, 0, 0.22); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="123" opacity="0.7" data-type="basic-circle" transform="translate(200.1568842248527,207.61299049479206) " style="fill: rgba(255, 213, 0, 0.2); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="124" opacity="0.7" data-type="basic-circle" transform="translate(202.24666403140378,208.85412690313203) " style="fill: rgba(255, 196, 0, 0.18); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="125" opacity="0.7" data-type="basic-circle" transform="translate(200.33554520229745,206.09172177876417) " style="fill: rgba(255, 235, 0, 0.16); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="126" opacity="0.7" data-type="basic-circle" transform="translate(202.42349218625037,207.32608007357297) " style="fill: rgba(255, 209, 0, 0.14); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="127" opacity="0.7" data-type="basic-circle" transform="translate(200.51046980564158,204.55750803403214) " style="fill: rgba(255, 221, 0, 0.12); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="128" opacity="0.7" data-type="basic-circle" transform="translate(202.59644327058305,205.78631307870992) " style="fill: rgba(255, 214, 0, 0.1); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="129" opacity="0.7" data-type="basic-circle" transform="translate(200.68137819283504,203.0128036753061) " style="fill: rgba(255, 239, 0, 0.08); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="130" opacity="0.7" data-type="basic-circle" transform="translate(202.76524059956114,204.2372892172686) " style="fill: rgba(255, 229, 0, 0.06); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="131" opacity="0.7" data-type="basic-circle" transform="translate(200.8479969469168,201.46007990004063) " style="fill: rgba(255, 247, 0, 0.04); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="132" opacity="0.7" data-type="basic-circle" transform="translate(202.92961413346646,202.68148659698645) " style="fill: rgba(255, 244, 0, 0.02); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="133" opacity="0.7" data-type="basic-circle" transform="translate(201.01005951342376,199.90182073504613) " style="fill: rgba(240, 255, 0, 0); filter: invert(1) opacity(0) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="134" opacity="0.7" data-type="basic-circle" transform="translate(203.08930090970927,201.12139417016908) " style="fill: rgba(244, 255, 0, 0.02); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="135" opacity="0.7" data-type="basic-circle" transform="translate(201.16730662682102,198.3405190625757) " style="fill: rgba(255, 246, 0, 0.04); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="136" opacity="0.7" data-type="basic-circle" transform="translate(203.24404546351224,199.55950775189746) " style="fill: rgba(246, 255, 0, 0.06); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="137" opacity="0.7" data-type="basic-circle" transform="translate(201.3194867252714,196.77867263224533) " style="fill: rgba(248, 255, 0, 0.08); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="138" opacity="0.7" data-type="basic-circle" transform="translate(203.3936002365997,197.99832602725616) " style="fill: rgba(238, 255, 0, 0.1); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="139" opacity="0.7" data-type="basic-circle" transform="translate(201.46635635308078,195.2187800651674) " style="fill: rgba(241, 255, 0, 0.12); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="140" opacity="0.7" data-type="basic-circle" transform="translate(203.53772597323808,196.4403465539702) " style="fill: rgba(243, 255, 0, 0.14); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="141" opacity="0.7" data-type="basic-circle" transform="translate(201.60768055017513,193.66333685668994) " style="fill: rgba(235, 255, 0, 0.16); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="142" opacity="0.7" data-type="basic-circle" transform="translate(203.67619210299387,194.88806176684565) " style="fill: rgba(205, 255, 0, 0.18); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="143" opacity="0.7" data-type="basic-circle" transform="translate(201.74323322798668,192.11483138413635) " style="fill: rgba(208, 255, 0, 0.2); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="144" opacity="0.7" data-type="basic-circle" transform="translate(203.8087771095974,193.34395499040548) " style="fill: rgba(198, 255, 0, 0.22); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="145" opacity="0.7" data-type="basic-circle" transform="translate(201.87279753114728,190.5757409259324) " style="fill: rgba(202, 255, 0, 0.24); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="146" opacity="0.7" data-type="basic-circle" transform="translate(203.9352688853213,191.81049646610015) " style="fill: rgba(203, 255, 0, 0.26); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="147" opacity="0.7" data-type="basic-circle" transform="translate(201.99616618441078,189.04852769848952) " style="fill: rgba(203, 255, 0, 0.28); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="148" opacity="0.7" data-type="basic-circle" transform="translate(204.05546507030797,190.29013940044814) " style="fill: rgba(184, 255, 0, 0.3); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="149" opacity="0.7" data-type="basic-circle" transform="translate(202.11314182424923,187.53563491718347) " style="fill: rgba(196, 255, 0, 0.32); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="150" opacity="0.7" data-type="basic-circle" transform="translate(204.1691733763019,188.78531604042894) " style="fill: rgba(167, 255, 0, 0.34); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="151" opacity="0.7" data-type="basic-circle" transform="translate(202.2235373145923,186.0394828877311) " style="fill: rgba(190, 255, 0, 0.36); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="150" opacity="0.7" data-type="basic-circle" transform="translate(204.27621189426998,187.29843378240673) " style="fill: rgba(187, 255, 0, 0.38); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="149" opacity="0.7" data-type="basic-circle" transform="translate(202.32717604620532,184.56246513421746) " style="fill: rgba(184, 255, 0, 0.4); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="148" opacity="0.7" data-type="basic-circle" transform="translate(204.37640938541708,185.83187132080977) " style="fill: rgba(182, 255, 0, 0.42); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="147" opacity="0.7" data-type="basic-circle" transform="translate(202.42389221922605,183.10694456996785) " style="fill: rgba(161, 255, 0, 0.44); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="146" opacity="0.7" data-type="basic-circle" transform="translate(204.46960555513172,184.38797484272655) " style="fill: rgba(172, 255, 0, 0.46); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="145" opacity="0.7" data-type="basic-circle" transform="translate(202.51353110840932,181.67524971739056) " style="fill: rgba(171, 255, 0, 0.48); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="144" opacity="0.7" data-type="basic-circle" transform="translate(204.55565130942318,182.96905427450722) " style="fill: rgba(143, 255, 0, 0.5); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="143" opacity="0.7" data-type="basic-circle" transform="translate(202.59594931065445,180.26967098283782) " style="fill: rgba(157, 255, 0, 0.52); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="142" opacity="0.7" data-type="basic-circle" transform="translate(204.63440899344,181.57737958637404) " style="fill: rgba(128, 255, 0, 0.54); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="141" opacity="0.7" data-type="basic-circle" transform="translate(202.67101497441945,178.89245699244404) " style="fill: rgba(157, 255, 0, 0.56); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="140" opacity="0.7" data-type="basic-circle" transform="translate(204.7057526116885,180.21517716095323) " style="fill: rgba(123, 255, 0, 0.58); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="139" opacity="0.7" data-type="basic-circle" transform="translate(202.73860801065538,177.54581099480393) " style="fill: rgba(112, 255, 0, 0.6); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="138" opacity="0.7" data-type="basic-circle" transform="translate(204.76956802959864,178.88462623153782) " style="fill: rgba(135, 255, 0, 0.62); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="137" opacity="0.7" data-type="basic-circle" transform="translate(202.79862028492343,176.2318873362445) " style="fill: rgba(119, 255, 0, 0.64); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="136" opacity="0.7" data-type="basic-circle" transform="translate(204.825753156115,177.5878553957791) " style="fill: rgba(107, 255, 0, 0.66); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="135" opacity="0.7" data-type="basic-circle" transform="translate(202.85095579038668,174.95278801433074) " style="fill: rgba(116, 255, 0, 0.68); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="134" opacity="0.7" data-type="basic-circle" transform="translate(204.8742181070207,176.32693921038458) " style="fill: rgba(88, 255, 0, 0.7); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="133" opacity="0.7" data-type="basic-circle" transform="translate(202.89553080140064,173.71055931511768) " style="fill: rgba(87, 255, 0, 0.72); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="132" opacity="0.7" data-type="basic-circle" transform="translate(204.91488534873287,175.10389487226985) " style="fill: rgba(85, 255, 0, 0.74); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="131" opacity="0.7" data-type="basic-circle" transform="translate(202.9322740074566,172.50718853952947) " style="fill: rgba(74, 255, 0, 0.76); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="130" opacity="0.7" data-type="basic-circle" transform="translate(204.9476898223401,173.92067899147364) " style="fill: rgba(104, 255, 0, 0.78); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="129" opacity="0.7" data-type="basic-circle" transform="translate(202.96112662726293,171.3446008241016) " style="fill: rgba(101, 255, 0, 0.8); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="128" opacity="0.7" data-type="basic-circle" transform="translate(204.9725790476824,172.7791844609993) " style="fill: rgba(81, 255, 0, 0.82); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="127" opacity="0.7" data-type="basic-circle" transform="translate(202.98204250278292,170.22465606117325) " style="fill: rgba(63, 255, 0, 0.84); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="126" opacity="0.7" data-type="basic-circle" transform="translate(204.98951320730868,171.68123742858975) " style="fill: rgba(73, 255, 0, 0.86); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="125" opacity="0.7" data-type="basic-circle" transform="translate(202.9949881730775,169.14914592345636) " style="fill: rgba(61, 255, 0, 0.88); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="124" opacity="0.7" data-type="basic-circle" transform="translate(204.99846521017602,170.62859437528064) " style="fill: rgba(69, 255, 0, 0.9); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="123" opacity="0.7" data-type="basic-circle" transform="translate(202.9999429278358,168.11979099774126) " style="fill: rgba(80, 255, 0, 0.92); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="122" opacity="0.7" data-type="basic-circle" transform="translate(204.99942073498943,169.62293930540537) " style="fill: rgba(46, 255, 0, 0.94); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="121" opacity="0.7" data-type="basic-circle" transform="translate(202.99689884050713,167.1382380323252) " style="fill: rgba(70, 255, 0, 0.96); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="120" opacity="0.7" data-type="basic-circle" transform="translate(204.9923782531131,168.66588105254743) " style="fill: rgba(58, 255, 0, 0.98); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="119" opacity="0.7" data-type="basic-circle" transform="translate(202.98586078098197,166.20605730256597) " style="fill: rgb(41, 255, 0); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="118" opacity="0.7" data-type="basic-circle" transform="translate(204.97734903101565,167.75895070574992) " style="fill: rgba(50, 255, 0, 0.98); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="117" opacity="0.7" data-type="basic-circle" transform="translate(202.96684640780072,165.32474009877663) " style="fill: rgba(42, 255, 0, 0.96); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="116" opacity="0.7" data-type="basic-circle" transform="translate(204.9543571122464,166.9035991600995) " style="fill: rgba(38, 255, 0, 0.94); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="115" opacity="0.7" data-type="basic-circle" transform="translate(202.93988613990442,164.49569634047884) " style="fill: rgba(25, 255, 0, 0.92); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="114" opacity="0.7" data-type="basic-circle" transform="translate(204.9234392789707,166.10119479560393) " style="fill: rgba(5, 255, 0, 0.9); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="113" opacity="0.7" data-type="basic-circle" transform="translate(202.90502310797046,163.72025232083274) " style="fill: rgba(35, 255, 0, 0.88); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="112" opacity="0.7" data-type="basic-circle" transform="translate(204.8846449931264,165.353021288076) " style="fill: rgba(0, 255, 6, 0.86); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="111" opacity="0.7" data-type="basic-circle" transform="translate(202.86231308541284,162.99964858485043) " style="fill: rgba(5, 255, 0, 0.84); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="110" opacity="0.7" data-type="basic-circle" transform="translate(204.8380363172951,164.66027555552586) " style="fill: rgba(0, 255, 16, 0.82); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="109" opacity="0.7" data-type="basic-circle" transform="translate(202.8118243991567,162.335037944789) " style="fill: rgba(12, 255, 0, 0.8); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="108" opacity="0.7" data-type="basic-circle" transform="translate(204.78368781541545,164.02406584334776) " style="fill: rgba(0, 255, 8, 0.78); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="107" opacity="0.7" data-type="basic-circle" transform="translate(202.75363782032971,161.72748363589642) " style="fill: rgba(0, 255, 18, 0.76); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="106" opacity="0.7" data-type="basic-circle" transform="translate(204.7216864334968,163.44540995136362) " style="fill: rgba(0, 255, 22, 0.74); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="105" opacity="0.7" data-type="basic-circle" transform="translate(202.68784643504554,161.17795761546225) " style="fill: rgba(0, 255, 36, 0.72); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="104" opacity="0.7" data-type="basic-circle" transform="translate(204.65213136052398,162.9252336055607) " style="fill: rgba(0, 255, 31, 0.7); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="103" opacity="0.7" data-type="basic-circle" transform="translate(202.61455549548583,160.68733900789323) " style="fill: rgba(0, 255, 10, 0.68); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="102" opacity="0.7" data-type="basic-circle" transform="translate(204.57513386977607,162.46436897712715) " style="fill: rgba(0, 255, 34, 0.66); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="101" opacity="0.7" data-type="basic-circle" transform="translate(202.53388225151937,160.25641269830177) " style="fill: rgba(0, 255, 24, 0.64); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="100" opacity="0.7" data-type="basic-circle" transform="translate(204.490817140813,162.06355335115597) " style="fill: rgba(0, 255, 56, 0.62); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="99" opacity="0.7" data-type="basic-circle" transform="translate(202.44595576312707,159.88586807685718) " style="fill: rgba(0, 255, 55, 0.6); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="98" opacity="0.7" data-type="basic-circle" transform="translate(204.39931606241453,161.72342794714598) " style="fill: rgba(0, 255, 62, 0.58); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="97" opacity="0.7" data-type="basic-circle" transform="translate(202.35091669393378,159.57629793590843) " style="fill: rgba(0, 255, 51, 0.56); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="96" opacity="0.7" data-type="basic-circle" transform="translate(204.30077701678692,161.44453689318732) " style="fill: rgba(0, 255, 44, 0.54); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="95" opacity="0.7" data-type="basic-circle" transform="translate(202.24891708617628,159.32819752164295) " style="fill: rgba(0, 255, 54, 0.52); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="94" opacity="0.7" data-type="basic-circle" transform="translate(204.1953576453826,161.22732635547277) " style="fill: rgba(0, 255, 44, 0.5); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="93" opacity="0.7" data-type="basic-circle" transform="translate(202.14012011746814,159.1419637417983) " style="fill: rgba(0, 255, 68, 0.48); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="92" opacity="0.7" data-type="basic-circle" transform="translate(204.08322659670756,161.07214382452688) " style="fill: rgba(0, 255, 92, 0.46); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="91" opacity="0.7" data-type="basic-circle" transform="translate(202.0246998397506,159.01789453069446) " style="fill: rgba(0, 255, 70, 0.44); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="90" opacity="0.7" data-type="basic-circle" transform="translate(203.9645632565197,160.97923755929529) " style="fill: rgba(0, 255, 90, 0.42); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="89" opacity="0.7" data-type="basic-circle" transform="translate(201.90284090084631,158.95618837260253) " style="fill: rgba(0, 255, 91, 0.4); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="88" opacity="0.7" data-type="basic-circle" transform="translate(203.83955746084976,160.9487561899835) " style="fill: rgba(0, 255, 93, 0.38); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="87" opacity="0.7" data-type="basic-circle" transform="translate(201.77473824906232,158.95694398421216) " style="fill: rgba(0, 255, 112, 0.36); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="86" opacity="0.7" data-type="basic-circle" transform="translate(203.7084091923044,160.98074848028003) " style="fill: rgba(0, 255, 95, 0.34); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="85" opacity="0.7" data-type="basic-circle" transform="translate(201.64059682131438,159.02016015670603) " style="fill: rgba(0, 255, 97, 0.32); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="84" opacity="0.7" data-type="basic-circle" transform="translate(203.57132826013645,161.07516324934502) " style="fill: rgba(0, 255, 120, 0.3); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="83" opacity="0.7" data-type="basic-circle" transform="translate(201.50063121527154,159.14573575769344) " style="fill: rgba(0, 255, 115, 0.28); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="82" opacity="0.7" data-type="basic-circle" transform="translate(203.428533964595,161.23184945368877) " style="fill: rgba(0, 255, 97, 0.26); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="81" opacity="0.7" data-type="basic-circle" transform="translate(201.3550653460458,159.33346989300088) " style="fill: rgba(0, 255, 132, 0.24); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="80" opacity="0.7" data-type="basic-circle" transform="translate(203.2802547460918,161.4505564288089) " style="fill: rgba(0, 255, 133, 0.22); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="79" opacity="0.7" data-type="basic-circle" transform="translate(201.20413208797547,159.58306222805973) " style="fill: rgba(0, 255, 107, 0.2); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="78" opacity="0.7" data-type="basic-circle" transform="translate(203.12672781974516,161.73093429020028) " style="fill: rgba(0, 255, 134, 0.18); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="77" opacity="0.7" data-type="basic-circle" transform="translate(201.04807290207611,159.89411346837736) " style="fill: rgba(0, 255, 141, 0.16); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="76" opacity="0.7" data-type="basic-circle" transform="translate(202.96819879588665,162.07253449309533) " style="fill: rgba(0, 255, 160, 0.14); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="75" opacity="0.7" data-type="basic-circle" transform="translate(200.88713744975428,160.26612599832333) " style="fill: rgba(0, 255, 136, 0.12); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="74" opacity="0.7" data-type="basic-circle" transform="translate(202.8049212871367,162.47481055004036) " style="fill: rgba(0, 255, 148, 0.1); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="73" opacity="0.7" data-type="basic-circle" transform="translate(200.7215831934027,160.69850467720818) " style="fill: rgba(0, 255, 153, 0.08); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="72" opacity="0.7" data-type="basic-circle" transform="translate(202.63715650267864,162.93711890515846) " style="fill: rgba(0, 255, 156, 0.06); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="71" opacity="0.7" data-type="basic-circle" transform="translate(200.55167498451507,161.19055779138156) " style="fill: rgba(0, 255, 178, 0.04); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="70" opacity="0.7" data-type="basic-circle" transform="translate(202.46517283037963,163.45871996370207) " style="fill: rgba(0, 255, 159, 0.02); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="69" opacity="0.7" data-type="basic-circle" transform="translate(200.37768463998057,161.7414981608265) " style="fill: rgba(0, 255, 161, 0); filter: invert(1) opacity(0) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="68" opacity="0.7" data-type="basic-circle" transform="translate(202.28924540742753,164.03877927524638) " style="fill: rgba(0, 255, 161, 0.02); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="67" opacity="0.7" data-type="basic-circle" transform="translate(200.1998905072344,162.35044439847962) " style="fill: rgba(0, 255, 158, 0.04); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="66" opacity="0.7" data-type="basic-circle" transform="translate(202.10965568016985,164.67636886863238) " style="fill: rgba(0, 255, 198, 0.06); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="65" opacity="0.7" data-type="basic-circle" transform="translate(200.01857701896162,163.01642232026222) " style="fill: rgba(0, 255, 195, 0.08); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="64" opacity="0.7" data-type="basic-circle" transform="translate(201.92669095385978,165.37046873652247) " style="fill: rgba(0, 255, 207, 0.1); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="63" opacity="0.7" data-type="basic-circle" transform="translate(199.83403423806527,163.7383665035672) " style="fill: rgba(0, 255, 189, 0.12); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="62" opacity="0.7" data-type="basic-circle" transform="translate(201.74064393302902,166.11996846719478) " style="fill: rgba(0, 255, 201, 0.14); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="61" opacity="0.7" data-type="basic-circle" transform="translate(199.64655739362783,164.5151219917078) " style="fill: rgba(0, 255, 194, 0.16); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="60" opacity="0.7" data-type="basic-circle" transform="translate(201.55181225322298,166.923669020965) " style="fill: rgba(0, 255, 224, 0.18); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="59" opacity="0.7" data-type="basic-circle" transform="translate(199.4564464086074,165.34544614160197) " style="fill: rgba(0, 255, 205, 0.2); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="58" opacity="0.7" data-type="basic-circle" transform="translate(201.36049800484741,167.78028464839403) " style="fill: rgba(0, 255, 212, 0.22); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="57" opacity="0.7" data-type="basic-circle" transform="translate(199.26400542002517,166.2280106117363) " style="fill: rgba(0, 255, 201, 0.24); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="56" opacity="0.7" data-type="basic-circle" transform="translate(201.16700724988814,168.68844494721296) " style="fill: rgba(0, 255, 215, 0.26); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="55" opacity="0.7" data-type="basic-circle" transform="translate(199.06954229241109,167.1614034872289) " style="fill: rgba(0, 255, 228, 0.28); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="54" opacity="0.7" data-type="basic-circle" transform="translate(200.97164953227738,169.64669705467418) " style="fill: rgba(0, 255, 218, 0.3); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="53" opacity="0.7" data-type="basic-circle" transform="translate(198.87336812528594,168.14413153859223) " style="fill: rgba(0, 255, 221, 0.32); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="52" opacity="0.7" data-type="basic-circle" transform="translate(200.77473738268912,170.65350797182194) " style="fill: rgba(0, 255, 229, 0.34); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="51" opacity="0.7" data-type="basic-circle" transform="translate(198.67579675546892,169.1746226105816) " style="fill: rgba(0, 255, 237, 0.36); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="50" opacity="0.7" data-type="basic-circle" transform="translate(200.57658581855708,171.7072670159637) " style="fill: rgba(0, 255, 246, 0.38); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="49" opacity="0.7" data-type="basic-circle" transform="translate(198.47714425500547,170.2512281373081) " style="fill: rgba(0, 253, 255, 0.4); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="48" opacity="0.7" data-type="basic-circle" transform="translate(200.3775118401137,172.80628839741885) " style="fill: rgba(0, 230, 255, 0.42); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="47" opacity="0.7" data-type="basic-circle" transform="translate(198.27772842551934,171.3722257795926) " style="fill: rgba(0, 255, 243, 0.44); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="46" opacity="0.7" data-type="basic-circle" transform="translate(200.17783392325774,173.94881391642232) " style="fill: rgba(0, 226, 255, 0.46); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="45" opacity="0.7" data-type="basic-circle" transform="translate(198.07786828979795,172.53582218034094) " style="fill: rgba(0, 249, 255, 0.48); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="44" opacity="0.7" data-type="basic-circle" transform="translate(199.97787151006048,175.13301577586955) " style="fill: rgba(0, 237, 255, 0.5); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="43" opacity="0.7" data-type="basic-circle" transform="translate(197.87788358142393,173.74015583353244) " style="fill: rgba(0, 245, 255, 0.52); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="42" opacity="0.7" data-type="basic-circle" transform="translate(199.77794449772662,176.35699950540166) " style="fill: rgba(0, 233, 255, 0.54); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="41" opacity="0.7" data-type="basic-circle" transform="translate(197.67809423326946,174.98330006223296) " style="fill: rgba(0, 236, 255, 0.56); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="40" opacity="0.7" data-type="basic-circle" transform="translate(199.57837272682704,177.61880699215408) " style="fill: rgba(0, 225, 255, 0.58); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="39" opacity="0.7" data-type="basic-circle" transform="translate(197.47881986567225,176.2632661008664) " style="fill: rgba(0, 234, 255, 0.6); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="38" opacity="0.7" data-type="basic-circle" transform="translate(199.3794754696222,178.9164196133191) " style="fill: rgba(0, 196, 255, 0.62); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="37" opacity="0.7" data-type="basic-circle" transform="translate(197.2803792751108,177.57800627681584) " style="fill: rgba(0, 224, 255, 0.64); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="36" opacity="0.7" data-type="basic-circle" transform="translate(199.18157091929447,180.24776146551227) " style="fill: rgba(0, 201, 255, 0.66); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="35" opacity="0.7" data-type="basic-circle" transform="translate(197.08308992419822,178.92541728626279) " style="fill: rgba(0, 190, 255, 0.68); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="34" opacity="0.7" data-type="basic-circle" transform="translate(198.98497568090698,181.61070268577444) " style="fill: rgba(0, 170, 255, 0.7); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="33" opacity="0.7" data-type="basic-circle" transform="translate(196.88726743380988,180.30334355902443) " style="fill: rgba(0, 167, 255, 0.72); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="32" opacity="0.7" data-type="basic-circle" transform="translate(198.79000426490305,183.0030628588985) " style="fill: rgba(0, 192, 255, 0.74); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="31" opacity="0.7" data-type="basic-circle" transform="translate(196.69322507815718,181.7095807070062) " style="fill: rgba(0, 185, 255, 0.76); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="30" opacity="0.7" data-type="basic-circle" transform="translate(198.59696858395662,184.42261450562845) " style="fill: rgba(0, 155, 255, 0.78); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="29" opacity="0.7" data-type="basic-circle" transform="translate(196.50127328361566,183.1418790507527) " style="fill: rgba(0, 152, 255, 0.8); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="28" opacity="0.7" data-type="basic-circle" transform="translate(198.40617745397847,185.86708664615105) " style="fill: rgba(0, 164, 255, 0.82); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="27" opacity="0.7" data-type="basic-circle" transform="translate(196.311719132109,184.59794721845458) " style="fill: rgba(0, 173, 255, 0.84); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="26" opacity="0.7" data-type="basic-circle" transform="translate(198.2179361000766,187.33416843317906) " style="fill: rgba(0, 146, 255, 0.86); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="25" opacity="0.7" data-type="basic-circle" transform="translate(196.12486586984363,186.0754558116548) " style="fill: rgba(0, 160, 255, 0.88); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="24" opacity="0.7" data-type="basic-circle" transform="translate(198.03254566826124,188.82151284881405) " style="fill: rgba(0, 131, 255, 0.9); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="23" opacity="0.7" data-type="basic-circle" transform="translate(195.94101242217923,187.57204113178926) " style="fill: rgba(0, 145, 255, 0.92); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="22" opacity="0.7" data-type="basic-circle" transform="translate(197.85030274367548,190.3267404592742) " style="fill: rgba(0, 122, 255, 0.94); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="21" opacity="0.7" data-type="basic-circle" transform="translate(195.76045291541203,189.08530896160033) " style="fill: rgba(0, 151, 255, 0.96); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="20" opacity="0.7" data-type="basic-circle" transform="translate(197.6714988761222,191.84744322148086) " style="fill: rgba(0, 141, 255, 0.98); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="19" opacity="0.7" data-type="basic-circle" transform="translate(195.58347620623564,190.61283839537347) " style="fill: rgb(0, 120, 255); filter: invert(0) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="18" opacity="0.7" data-type="basic-circle" transform="translate(197.49642011364674,193.38118833541378) " style="fill: rgba(0, 106, 255, 0.98); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="17" opacity="0.7" data-type="basic-circle" transform="translate(195.41036541963172,192.15218571187026) " style="fill: rgba(0, 113, 255, 0.96); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="16" opacity="0.7" data-type="basic-circle" transform="translate(197.32534654492085,194.92552213607217) " style="fill: rgba(0, 131, 255, 0.94); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="15" opacity="0.7" data-type="basic-circle" transform="translate(195.24139749593044,193.70088828376086) " style="fill: rgba(0, 90, 255, 0.92); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="14" opacity="0.7" data-type="basic-circle" transform="translate(197.15855185116078,196.47797401881536) " style="fill: rgba(0, 106, 255, 0.9); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="13" opacity="0.7" data-type="basic-circle" transform="translate(195.0768427477652,195.25646851730255) " style="fill: rgba(0, 83, 255, 0.88); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="12" opacity="0.7" data-type="basic-circle" transform="translate(196.99630286829557,198.0360603918029) " style="fill: rgba(0, 82, 255, 0.86); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="11" opacity="0.7" data-type="basic-circle" transform="translate(194.91696442762992,196.81643781596105) " style="fill: rgba(0, 102, 255, 0.84); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="10" opacity="0.7" data-type="basic-circle" transform="translate(196.83885916008657,199.59728864921217) " style="fill: rgba(0, 107, 255, 0.82); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="9" opacity="0.7" data-type="basic-circle" transform="translate(194.76201830673125,198.3783005616342) " style="fill: rgba(0, 66, 255, 0.8); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="8" opacity="0.7" data-type="basic-circle" transform="translate(196.68647260288066,201.15916115887552) " style="fill: rgba(0, 87, 255, 0.78); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="7" opacity="0.7" data-type="basic-circle" transform="translate(194.6122522658092,199.93955810710858) " style="fill: rgba(0, 61, 255, 0.76); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+        <circle class="basic-circle" r="6" opacity="0.7" data-type="basic-circle" transform="translate(196.53938698266202,202.71917925795918) " style="fill: rgba(0, 91, 255, 0.74); filter: invert(1) opacity(1) drop-shadow(rgba(0, 0, 0, 0.19) 0px 0px 5px);"></circle>
+      </g>
+      
+      <!-- <circle id="circleOrbit" r="10" fill="cyan" /> -->
+      <!-- <circle id="circleOsc" r="10" fill="magenta" /> -->
+      <!-- <g id="radialGroup" fill="lime"></g> -->
+      <!-- <polygon id="arrow" points="0,-20 40,0 0,20" fill="orange" transform="translate(250,250)" /> -->
+      <!-- <path id="wavePath" stroke="yellow" fill="none" stroke-width="2" /> -->
+      <!-- <path id="compositePath" d="M " fill="none" stroke-width="2" /> -->
+      <!-- <circle id="compositeDot" r="12" fill="transparent" opacity="0.7" /> -->
+    </g>
+  </svg>
+  <script type="module">
+    import ham from 'https://hamilsauce.github.io/hamhelper/hamhelper1.0.0.js';
+    const { template, getPanZoom } = ham;
+    const svg = document.getElementById("demo");
+    
     getPanZoom(svg)
   </script>
 </body>
