@@ -262,7 +262,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05) => {
 					filter: `blur(${blur}) invert(${invert}) opacity(${opa2/10}) drop-shadow(0 0 5px #00000030)`,
 					'mix-blend-mode': animState.blendMode,
 					isolation: animState.isolate ? 'isolate' : null,
-					transition,
+					// transition,
 				},
 				attrs: {
 					transform: `translate(${orbitX},${orbitY}) rotate(${hueRotate-rand})`,

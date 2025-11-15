@@ -32,23 +32,50 @@ export const getSVGTemplate = (context, type, options) => {
   return template;
 }
 
-export const initCalculateFPS = (smoothingWindowSize = 30) => {
-  let fps = 0;
-  let frameTimes = [];
-  let lastTime = 0;
-  
-  
-  return (timestamp) => {
-    const delta = (timestamp - lastTime) / 1000;
-    lastTime = timestamp;
+const state = {
+  sampleIndex: 0,
+  fpsSamples: [0, 0, 0, 0, 0],
+  elapsed: 0,
+  deltaMs: 0,
+  setFPS(delta) {
+    const i = this.sampleIndex;
+    this.fpsSamples[i] = Math.round((1 / (delta / 1000)))
+    this.sampleIndex = i >= 5 ? 0 : i + 1;
     
-    frameTimes.push(delta);
+  },
+  get deltaMs() { return Math.round(((1 / (this.deltaMs / 1000)) + this.fpsSamples) / 2); },
+  get fps() { return Math.round(this.fpsSamples.reduce((sum, curr, i) => sum + curr, 0) / this.fpsSamples.length) },
+}
 
-    if (frameTimes.length > smoothingWindowSize) frameTimes.shift(); // keep last 30 frames
-    
-    const avgDelta = frameTimes.reduce((a, b) => a + b) / frameTimes.length;
-    fps = Math.round(1 / avgDelta);
-    
-    return fps;
-  }
+
+export const frameRate = (delta) => {
+  state.setFPS(delta);
+  
+  return state.fps;
 };
+
+window.fpsState = state
+
+
+
+
+// export const initCalculateFPS = (smoothingWindowSize = 30) => {
+//   let fps = 0;
+//   let frameTimes = [];
+//   let lastTime = 0;
+  
+  
+//   return (timestamp) => {
+//     const delta = (timestamp - lastTime) / 1000;
+//     lastTime = timestamp;
+    
+//     frameTimes.push(delta);
+
+//     if (frameTimes.length > smoothingWindowSize) frameTimes.shift(); // keep last 30 frames
+    
+//     const avgDelta = frameTimes.reduce((a, b) => a + b) / frameTimes.length;
+//     fps = Math.round(1 / avgDelta);
+    
+//     return fps;
+//   }
+// };

@@ -124,13 +124,13 @@ svg.addEventListener("pointermove", e => {
 });
 
 // --- Buttons for interaction
-document.getElementById("toggleComposite").addEventListener("click", () => {
-  compositeMode = !compositeMode;
-});
+// document.getElementById("toggleComposite").addEventListener("click", () => {
+//   compositeMode = !compositeMode;
+// });
 
-document.getElementById("toggleWave").addEventListener("click", () => {
-  showWave = !showWave;
-});
+// document.getElementById("toggleWave").addEventListener("click", () => {
+//   showWave = !showWave;
+// });
 
 // --- Click to add radial burst
 // svg.addEventListener("click", e => {

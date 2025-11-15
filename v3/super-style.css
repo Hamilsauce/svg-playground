@@ -91,7 +91,7 @@ svg {
 }
 
 #viewport * {
-  transition: 8.5s;
+  /* transition: 8.5s; */
 }
 
 #modeOptions {
