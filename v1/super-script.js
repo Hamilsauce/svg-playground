@@ -92,7 +92,7 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-makecircles()
+// makecircles()
 makeRects.start()
 // animate();
 

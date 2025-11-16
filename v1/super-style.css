@@ -99,7 +99,7 @@ button:hover {
   stroke: hsla(0, 0%, 100%, 0.9);
   /* filter: invert(0) contrast(1) brightness(0.8); */
   
-  /* transition: 1s; */
+  transition: 1.25s ease-out !important;
   /* backdrop-filter: invert(1); */
   /* opacity: 0.8; */
 }

@@ -1,7 +1,9 @@
 import { getSVGTemplate } from './utils.js';
+import { initBlur } from '../utils/blur.js';
+import { blendModeKeyWords, BlendMode } from '../blend-modes.js';
 import { initGradientMan } from './gradienter.js';
 import svg from 'https://hamilsauce.github.io/hamhelper/modules/svg.js';
-import {frameRate } from '../utils/frame-rate.js';
+import { frameRate } from '../utils/frame-rate.js';
 const { createSVGElement } = svg;
 
 const fpsDisplay = document.querySelector('#fps');
@@ -26,6 +28,12 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
   let rafID = null
   const svgCanvas = svgEl.closest('svg')
   const getGradient = initGradientMan(200)
+  const getBlur = initBlur({
+    direction: 'forward',
+    min: 0,
+    max: 30,
+    initial: 0,
+  });
   
   let lastTime = 0;
   
@@ -71,8 +79,8 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
             fill: `hsla(${hueRotate - rand}, 100%, 50%, ${opacity})`,
             // fill: background,
             transform,
-            // filter: `opacity(${opacity})`,
-            filter: `opacity(${opacity}) drop-shadow(0 0 2px #00000025)`,
+            filter: `opacity(${opacity})`,
+            filter: `blur(${getBlur(delta)}px) opacity(${opacity}) drop-shadow(0 0 2px #00000025)`,
             
           },
           attrs: {
@@ -110,28 +118,39 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
   let hueRotate = 180;
   let angle = 0;
   let t = 0;
-  let cx = 150;
-  let cy = 150;
+  let cx = 75;
+  let cy = 75;
   let radius = 41;
   let radiusStep = 0.9;
   let opacityStep = 0.0075;
   let orbitStep = 2;
-  
+  let invert = 0
   let opacity = 0.6;
   let circles = [];
   let circleCounter = 0;
   let rotoMod = 2
   const svgCanvas = svgEl.closest('svg')
   let lastTime = 0;
+  let blendModes = [BlendMode.overlay, BlendMode.multiply, BlendMode.softLight]
+  let bmIndex = 0
+  let blendMode = blendModes[bmIndex]
+  
+  const getBlur = initBlur({
+    direction: 'forward',
+    min: -10,
+    max: 16,
+    initial: 9,
+    increment: 1.5,
+  });
   
   
   const createRect = (timestamp) => {
     
     const delta = (timestamp - lastTime);
     
-    if (animState.isRunning && delta > 48) {
+    if (animState.isRunning && delta > 16) {
       
-      console.warn(isRunning)
+      // console.warn(isRunning)
       // if (!isRunning) return
       
       // const fps = calcFPS(timestamp)
@@ -151,30 +170,43 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
       // radius = radius + radiusStep;
       // radius = radius > 90 ? radiusStep : radius + radiusStep;
       
-      opacityStep = opacity > 0.6 || opacity <= 0.1 ? -opacityStep : opacityStep;
+      opacityStep = opacity > 0.4 || opacity <= 0.2 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
-      radiusStep = radius > 60 || radius <= 40 ? -radiusStep : radiusStep;
+      radiusStep = radius > 150 || radius <= 10 ? -radiusStep : radiusStep;
+      
+      if (radius > 150 || radius <= 10) {
+        bmIndex = bmIndex > blendModes.length ? 0 : bmIndex + 1;
+        blendMode = blendModes[bmIndex]
+        invert = invert === 0 ? 1 : 0
+      }
       radius = radius + radiusStep;
+      
+      
+      // blendMode = radiusStep > 0 ? BlendMode.overlay : BlendMode.multiply
+      
       
       
       rotoMod = rotoMod === 2 ? 6 : 2
       
-      orbitStep = cx >= 250 || cx <= 100 ? -orbitStep : orbitStep;
+      orbitStep = cx >= 150 || cx <= 50 ? -orbitStep : orbitStep;
+      // invert = cx >= 150 || cx <= 50 ? 1 : 0;
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
-      
-      if (circles.length <= 200) {
-        const orbitX = cx + 100 * Math.cos(angle);
-        const orbitY = cy + 100 * Math.sin(angle);
-        
+      if (circles.length <= 50) {
+        const orbitX = cx + 50 * Math.cos(angle);
+        const orbitY = cy + 50 * Math.sin(angle);
+        // console.warn('opacity', opacity)
         const circ = getSVGTemplate(svgCanvas, 'basic-rect', {
           style: {
-            stroke: `hsla(${hueRotate*2}, 100%, 50%, ${0.35})`,
+            stroke: `hsla(${-hueRotate*2}, 100%, 50%, ${0.35})`,
             fill: `hsla(${hueRotate}, 100%, 50%, ${opacity})`,
             // filter: `contrast(1.2)`,
-            filter: `drop-shadow(0 0 5px #00000030)`,
-            
+            filter: `blur(${getBlur(delta)}px) drop-shadow(0 0 5px #00000030) invert(${invert}) opacity(${opacity})`,
+            // 'mix-blend-mode': 'lighten',
+            'mix-blend-mode': blendMode,
+            // 'mix-blend-mode': 'soft-light',
+            // isolation: 'isolate',
           },
           attrs: {
             width: radius,
