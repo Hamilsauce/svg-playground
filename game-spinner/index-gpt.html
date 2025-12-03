@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>SVG Spinner</title>
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #eee;
+      font-family: system-ui, sans-serif;
+    }
+    
+    .wrapper {
+      text-align: center;
+    }
+    
+    svg {
+      touch-action: none;
+      /* allow custom gesture handling */
+      user-select: none;
+    }
+    
+    #status {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <svg id="spinner-svg" width="320" height="320" viewBox="0 0 300 300">
+      <!-- Pointer at the top -->
+      <polygon id="pointer" points="145,15 155,15 150,35" fill="#ffcc00" stroke="#333" stroke-width="1.5" />
+      <!-- Circle base / shadow -->
+      <circle cx="150" cy="150" r="120" fill="#222" stroke="#555" stroke-width="4" />
+      <!-- Slices will be injected into this group -->
+      <g id="spinner-group"></g>
+      <!-- Center cap -->
+      <circle cx="150" cy="150" r="18" fill="#111" stroke="#ffcc00" stroke-width="3" />
+    </svg>
+    <div id="status">Swipe up or down with one finger (or drag with mouse) to spin.</div>
+  </div>
+  <script type="module" src="./script.js"></script>
+  <script type="module" src="./script2.js"></script>
+  
+</body>
+
+</html>

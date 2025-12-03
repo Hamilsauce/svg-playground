@@ -1,5 +1,5 @@
 import { getSVGTemplate } from './utils.js';
-import { initBlur } from '../utils/blur.js';
+import { initValueStepper } from '../utils/value-stepper.js';
 import { blendModeKeyWords, BlendMode } from '../blend-modes.js';
 import { initGradientMan } from './gradienter.js';
 import svg from 'https://hamilsauce.github.io/hamhelper/modules/svg.js';
@@ -28,14 +28,29 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
   let rafID = null
   const svgCanvas = svgEl.closest('svg')
   const getGradient = initGradientMan(200)
-  const getBlur = initBlur({
+  const getBlur = initValueStepper({
     direction: 'forward',
     min: 0,
+    max: 5,
+    initial: 0,
+  });
+  
+  const getDropShadow = initValueStepper({
+    direction: 'forward',
+    min: 10,
     max: 30,
+    initial: 10,
+  });
+  
+  const getShadowAngle = initValueStepper({
+    direction: 'forward',
+    min: 0,
+    max: 10,
     initial: 0,
   });
   
   let lastTime = 0;
+  let blendMode = BlendMode.luminosity
   
   const createCircle = (timestamp = 0) => {
     // if (!animState.isRunning) return;
@@ -52,20 +67,22 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
       
       opacityStep = opacity > 0.6 || opacity <= 0.1 ? -opacityStep : opacityStep;
       opacity = opacity + opacityStep;
-      radiusStep = radius > 80 || radius <= 40 ? -radiusStep : radiusStep;
+      radiusStep = radius > 100 || radius <= 40 ? -radiusStep : radiusStep;
       radius = radius + radiusStep;
       
       orbitStep = cx >= 250 || cx <= 100 ? -orbitStep : orbitStep;
       cx = cx + orbitStep;
       cy = cy + orbitStep;
       
-      if (circles.length <= 200) {
+      if (circles.length <= 100) {
         const rand = Math.random() * 10
+        if (cx >= 125 || cx <= 50) {
+          blendMode = blendMode === BlendMode.luminosity ? BlendMode.multiply : BlendMode.luminosity
+          
+        }
         
-        
-        
-        const orbitX = cx + 100 * Math.cos(angle);
-        const orbitY = cy + 100 * Math.sin(angle);
+        const orbitX = cx + 0 * Math.cos(angle);
+        const orbitY = cy + 10 * Math.sin(angle);
         const { background, transform } = getGradient()
         
         
@@ -79,8 +96,9 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
             fill: `hsla(${hueRotate - rand}, 100%, 50%, ${opacity})`,
             // fill: background,
             transform,
+            'mix-blend-mode': blendMode,
             filter: `opacity(${opacity})`,
-            filter: `blur(${getBlur(delta)}px) opacity(${opacity}) drop-shadow(0 0 2px #00000025)`,
+            filter: `blur(${getBlur(delta)}px) opacity(${opacity}) drop-shadow(${getShadowAngle(delta)}px ${getShadowAngle(delta)*-1}px ${getDropShadow(delta)}px hsla(${hueRotate + rand}, 100%, 50%, ${opacity}))`,
             
           },
           attrs: {
@@ -92,7 +110,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
         svgEl.append(circ)
         circles.push(circ)
         
-      } else if (circles.length >= 200) {
+      } else if (circles.length >= 100) {
         
         circles.shift().remove();
         
@@ -101,7 +119,7 @@ export const circleMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) =>
       lastTime = timestamp;
     }
     
-    svgCanvas.style.filter = `hue-rotate(${hueRotate-hueRotate-1}deg)`
+    svgCanvas.style.filter = `hue-rotate(${hueRotate-hueRotate}deg)`
     rafID = requestAnimationFrame(createCircle);
     
   }
@@ -135,7 +153,7 @@ export const rectMaker = (svgEl, angleStep = 0.02, tStep = 0.05, timestamp) => {
   let bmIndex = 0
   let blendMode = blendModes[bmIndex]
   
-  const getBlur = initBlur({
+  const getBlur = initValueStepper({
     direction: 'forward',
     min: -10,
     max: 16,

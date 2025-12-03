@@ -92,8 +92,8 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-// makecircles()
-makeRects.start()
+makecircles()
+// makeRects.start()
 // animate();
 
 // --- Interactive rotation using atan2

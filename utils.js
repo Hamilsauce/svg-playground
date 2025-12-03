@@ -33,20 +33,20 @@ export const getSVGTemplate = (context, type, options) => {
 }
 
 const toPointInContainer = (target, { x, y }) => {
-	return new DOMPoint(x, y).matrixTransform(
-		target.getScreenCTM().inverse()
-	);
+  return new DOMPoint(x, y).matrixTransform(
+    target.getScreenCTM().inverse()
+  );
 }
 
 export const svgPoint = (svg, target, x, y) => {
-	var pt = svg.createSVGPoint();
-	pt.x = x;
-	pt.y = y;
-	return pt.matrixTransform(target.getScreenCTM().inverse());
+  var pt = svg.createSVGPoint();
+  pt.x = x;
+  pt.y = y;
+  return pt.matrixTransform(target.getScreenCTM().inverse());
 }
 
 export const toSVGPoint = ({ x, y }) => {
-	return svgPoint(svgCanvas, x, y)
+  return svgPoint(svgCanvas, x, y)
 }
 
 export const applyAttributes = (template, options) => {
