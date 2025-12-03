@@ -2,47 +2,157 @@
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <title>app</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.min.js" integrity="sha512-y3JTS47nnpKORJX8Jn1Rlm+QgRIIZHtu3hWxal0e81avPrqUH48yk+aCi+gprT0RMAcpYa0WCkapxe+bpBHD6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link rel="stylesheet" href="./style.css" />
+  <meta charset="UTF-8">
+  <title>Continuous Spinner</title>
+  <style>
+    body {
+      background: #111;
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      user-select: none;
+      touch-action: none;
+      font-family: system-ui;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="app">
-    <header id="app-header">
-      <div id="app-header-left"></div>
-      <div id="app-header-center">
-        <h1>Jake's Tapper</h1>
-      </div>
-      <div id="app-header-right"></div>
-    </header>
-    <section id="app-body">
-      <div id="app-info-display" class="container">
-        <div id="app-message">Start tapping to get tempo </div>
-        <div id="app-beats">
-          <div class="beat-marker" id="beat1" data-active="false"> </div>
-          <div class="beat-marker" id="beat2" data-active="false"> </div>
-          <div class="beat-marker" id="beat3" data-active="false"> </div>
-          <div class="beat-marker" id="beat4" data-active="false"> </div>
-        </div>
-      </div>
-      <div class="container">
-        <div id="tap-indicator"></div>
-      </div>
-    </section>
-    <footer id="app-footer">
-      <div class="container">
-        footer
-      </div>
-    </footer>
-  </div>
-  <script src="./script.js" type="module"></script>
+  
+  <svg id="spinner-svg" width="320" height="320" viewBox="0 0 300 300">
+    <polygon points="145,15 155,15 150,35" fill="#ffcc00" stroke="#333" stroke-width="1.5" />
+    <circle cx="150" cy="150" r="120" fill="#222" stroke="#555" stroke-width="4" />
+    <g id="spinner-group"></g>
+    <circle cx="150" cy="150" r="18" fill="#111" stroke="#ffcc00" stroke-width="3" />
+  </svg>
+  
+  <script>
+    // ---- CONFIG ----
+    const NUM_SLICES = 6;
+    const cx = 150,
+      cy = 150,
+      radius = 120;
+    
+    // Physics parameters
+    const friction = 0.995; // < 1 means it slows down gradually
+    const velocityMultiplier = 2.2; // how much a swipe adds
+    let angle = 0;
+    let angularVelocity = 0;
+    
+    // Gesture tracking
+    let activePointerId = null;
+    let startY = null;
+    let startTime = null;
+    
+    const spinnerGroup = document.getElementById("spinner-group");
+    const svg = document.getElementById("spinner-svg");
+    
+    // ---- Build spinner ----
+    function polar(cx, cy, r, angleDeg) {
+      const rad = angleDeg * Math.PI / 180;
+      return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+    }
+    
+    function createSlice(startAngle, endAngle) {
+      const a = polar(cx, cy, radius, startAngle);
+      const b = polar(cx, cy, radius, endAngle);
+      const big = endAngle - startAngle > 180 ? 1 : 0;
+      
+      return `M ${cx} ${cy}
+          L ${a.x} ${a.y}
+          A ${radius} ${radius} 0 ${big} 1 ${b.x} ${b.y}
+          Z`;
+    }
+    
+    function initSpinner() {
+      spinnerGroup.innerHTML = "";
+      const sliceAngle = 360 / NUM_SLICES;
+      
+      for (let i = 0; i < NUM_SLICES; i++) {
+        const s = -90 + i * sliceAngle;
+        const e = s + sliceAngle;
+        let p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        p.setAttribute("d", createSlice(s, e));
+        p.setAttribute("fill", `hsl(${i * 60}, 70%, 40%)`);
+        p.setAttribute("stroke", "#111");
+        spinnerGroup.appendChild(p);
+        
+        const mid = (s + e) / 2;
+        const pos = polar(cx, cy, radius * 0.6, mid);
+        let t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t.setAttribute("x", pos.x);
+        t.setAttribute("y", pos.y + 4);
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("font-size", "16");
+        t.setAttribute("fill", "#fff");
+        t.textContent = i + 1;
+        spinnerGroup.appendChild(t);
+      }
+    }
+    
+    initSpinner();
+    
+    // ---- Physics animation loop ----
+    let lastTime = performance.now();
+    
+    function tick(now) {
+      const dt = now - lastTime;
+      lastTime = now;
+      
+      // Update physics
+      angle += angularVelocity * dt; // v is degrees per ms
+      angularVelocity *= friction; // slow down slightly
+      angle %= 360;
+      
+      // Apply rotation
+      spinnerGroup.setAttribute("transform", `rotate(${angle} ${cx} ${cy})`);
+      
+      requestAnimationFrame(tick);
+    }
+    
+    requestAnimationFrame(tick);
+    
+    // ---- Gesture handling (adds velocity) ----
+    svg.addEventListener("pointerdown", e => {
+      if (activePointerId !== null) return;
+      
+      activePointerId = e.pointerId;
+      startY = e.clientY;
+      startTime = performance.now();
+    });
+    
+    svg.addEventListener("pointerup", e => {
+      if (e.pointerId !== activePointerId) return;
+      
+      const dy = e.clientY - startY;
+      const distance = Math.abs(dy);
+      const dt = performance.now() - startTime;
+      
+      const MIN_DIST = 20;
+      if (distance >= MIN_DIST) {
+        const velocity = distance / dt; // px/ms
+        const boost = velocity * velocityMultiplier * (dy < 0 ? -1 : 1); // up = CCW, down = CW
+        angularVelocity += boost; // ← ADD to existing velocity (the key)
+      }
+      
+      activePointerId = null;
+      startY = null;
+      startTime = null;
+    });
+    
+    svg.addEventListener("pointercancel", reset);
+    svg.addEventListener("pointerleave", e => { if (e.pointerId === activePointerId) reset(); });
+    
+    function reset() {
+      activePointerId = null;
+      startY = null;
+      startTime = null;
+    }
+  </script>
+  
 </body>
 
 </html>
