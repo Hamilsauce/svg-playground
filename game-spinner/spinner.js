@@ -94,8 +94,8 @@ const tick = (now) => {
   angle += angularVelocity * dt; // v is degrees per ms
   angularVelocity *= friction; // slow down slightly
   angle %= 360;
-  angularVelocity = angularVelocity < 0.01 ? 0: angularVelocity
-
+  angularVelocity = angularVelocity < 0.05 ? 0 : angularVelocity
+  
   // Apply rotation
   spinnerGroup.setAttribute("transform", `rotate(${angle} ${cx} ${cy})`);
   
@@ -105,12 +105,17 @@ const tick = (now) => {
     const arrowAngle = spinnerArrowState === 'initial' ? 0 : 350
     
     spinnerArrow.setAttribute("transform", `rotate(${arrowAngle} 15  15)`);
-    
   }
+  const blur = angularVelocity / 5;
+  const invert = angularVelocity > 2 ? 1 : 0
+  spinnerGroup.style.filter = `blur(${blur}px) drop-shadow(0 0 10px #00000099) invert(${invert})`
+  spinnerCenter.style.filter = `blur(${blur/1.5}px) drop-shadow(0 0 10px #00000099)`
   
-  spinnerGroup.style.filter = `blur(${angularVelocity/5}px) drop-shadow(0 0 6px #00000090)`
-  spinnerCenter.style.filter = `blur(${angularVelocity/5}px) drop-shadow(0 0 6px #00000090)`
-  app.style.background = getGradient(-angle)
+  const stop1 = Math.min(50 + (50 * blur), 60);
+  const stop2 = Math.max(-stop1 + 100, 40)
+  console.warn({angularVelocity})
+  app.style.background = getGradient(-angle, stop2, stop1)
+  // app.style.filter = `blur(${blur}px) drop-shadow(0 0 6px #00000090)`
   requestAnimationFrame(tick);
 }
 

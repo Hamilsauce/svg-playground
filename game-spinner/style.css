@@ -48,7 +48,9 @@ pre {
   align-items: center;
   gap: 0px;
   padding: 8px;
-  color: #1F1F1F;
+  color: #646464D4;
+  /* backdrop-filter: invert(1); */
+  /* filter: invert(1); */
 }
 
 #app-body {

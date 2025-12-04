@@ -1,4 +1,3 @@
-
 function* circleLooper(sourceArray = [], startIndex = 0) {
   let index = startIndex;
   let indexOverride
@@ -14,8 +13,11 @@ export const makeCircular = (sourceArray) => {
   return circleLooper(sourceArray)
 };
 
-export const getGradient = (angle) => {
-  return `linear-gradient(${angle}deg, #3325A7 50%, #E1BD34EB 50%)`
+export const getGradient = (angle, stop1 = 50, stop2 = 50) => {
+  const hsla1 = `hsla(${-(angle - 45)}, 90%, 45%, 1)`;
+  const hsla2 = `hsla(${angle+90}, 90%, 45%, 1)`;
+  
+  return `linear-gradient(${angle}deg, ${hsla1} ${stop1}%, ${hsla2} ${stop2}%)`
 };
 
 export const initGradientMan = (interval = 16) => {
