@@ -3,6 +3,9 @@
   padding: 0;
   margin: 0;
   z-index: 0;
+  user-select: none;
+  touch-action: none;
+  
 }
 
 html {
@@ -75,8 +78,6 @@ pre {
 }
 
 svg {
-  user-select: none;
-  touch-action: none;
   
 }
 
