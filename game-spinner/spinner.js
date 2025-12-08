@@ -9,6 +9,7 @@ const NUM_SLICES = 6;
 const cx = 150;
 const cy = 150;
 const radius = 120;
+const pegOffsets = [-30, -15, 0, 15];
 
 // Physics parameters
 const friction = 0.995; // < 1 means it slows down gradually
@@ -61,6 +62,17 @@ const createSliceText = (pos, textContent) => {
   
   return t;
 }
+const createSlicePeg = (offset, mid) => {
+  let peg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  const pos = polar(cx, cy, radius * 0.95, mid - offset);
+  peg.setAttribute('cx', pos.x);
+  peg.setAttribute('cy', pos.y);
+  peg.setAttribute('r', 4);
+  peg.setAttribute('fill', 'hsla(31, 71%, 22%, 1)')
+  peg.setAttribute('stroke', '#000000');
+  
+  return peg;
+}
 
 const getSliceTextEls = () => {
   return [...document.querySelectorAll('.slice-text')]
@@ -100,6 +112,17 @@ const initSpinner = () => {
     const pos = polar(cx, cy, radius * 0.6, mid);
     let t = createSliceText(pos, i + 1)
     spinnerGroup.appendChild(t);
+    spinnerArrow.setAttribute('transform', `rotate(${345} 15  15)`);
+  }
+  
+  for (let i = 0; i < NUM_SLICES; i++) {
+    const s = -90 + i * sliceAngle;
+    const e = s + sliceAngle;
+    const mid = (s + e) / 2;
+    
+    pegOffsets.forEach((offset, i) => {
+      spinnerGroup.appendChild(createSlicePeg(offset, mid));
+    });
   }
 }
 
@@ -116,41 +139,44 @@ let currentRadiusMod = 0.6
 let velModStep = 0.075
 let velMod = 0
 let radiusModStep = 0.075
-
+let lastAngle = 0
 
 const tick = (now) => {
   const dt = now - lastTime;
   lastTime = now;
-  deltaAccumulator += dt
   
   // slow down faster
   velMod = (angularVelocity * 0.0025)
   
   angularVelocity = angularVelocity - velMod
   
+  deltaAccumulator += angularVelocity
+  
   // Update physics
   angle += angularVelocity * dt; // v is degrees per ms
   angularVelocity *= (friction); // slow down slightly
   angle %= 360;
+  
   angularVelocity = angularVelocity < 0.05 ? 0 : angularVelocity
   
   // Apply rotation
   spinnerGroup.setAttribute('transform', `rotate(${angle} ${cx} ${cy})`);
   
-  if (deltaAccumulator > 16 && angularVelocity > 0) {
+  if (deltaAccumulator > 1.5 && angularVelocity > 0) {
     deltaAccumulator = 0
     spinnerArrowState = spinnerArrowState === 'initial' ? 'angled' : 'initial';
-    const arrowAngle = spinnerArrowState === 'initial' ? 0 : 350
+    const arrowAngle = spinnerArrowState === 'initial' ? 0 : 345
     
     spinnerArrow.setAttribute('transform', `rotate(${arrowAngle} 15  15)`);
-    radiusModStep = currentRadiusMod <= 0.2 || currentRadiusMod >= 0.8 ? -radiusModStep : radiusModStep;
+    radiusModStep = currentRadiusMod <= 0.3 || currentRadiusMod >= 0.7 ? -radiusModStep : radiusModStep;
     
     currentRadiusMod = currentRadiusMod + (radiusModStep * (angularVelocity / 5))
     moveSliceText(currentRadiusMod)
   }
+  
   const blur = angularVelocity / 5;
   const invert = angularVelocity > 2 ? 1 : 0
-  spinnerGroup.style.filter = `blur(${blur}px) drop-shadow(0 0 10px #00000099) invert(${invert})`
+  spinnerGroup.style.filter = `blur(${blur}px) drop-shadow(0 0 8px #000000D4) invert(${invert})`
   spinnerCenter.style.filter = `blur(${blur/1.5}px) drop-shadow(0 0 10px #00000099)`
   
   const stop1 = Math.min(50 + (50 * blur), 60);
