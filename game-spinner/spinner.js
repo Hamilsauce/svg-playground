@@ -176,7 +176,8 @@ const tick = (now) => {
   
   const blur = angularVelocity / 5;
   const invert = angularVelocity > 2 ? 1 : 0
-  spinnerGroup.style.filter = `blur(${blur}px) drop-shadow(0 0 8px #000000D4) invert(${invert})`
+  const saturate = angularVelocity > 0.0 ? 1.5 : 1.2
+  spinnerGroup.style.filter = `blur(${blur}px) drop-shadow(0 0 8px #000000D4) invert(${invert}) brightness(${saturate})`
   spinnerCenter.style.filter = `blur(${blur/1.5}px) drop-shadow(0 0 10px #00000099)`
   
   const stop1 = Math.min(50 + (50 * blur), 60);
@@ -197,7 +198,7 @@ svg.addEventListener('pointerdown', e => {
   startTime = performance.now();
 });
 
-svg.addEventListener('pointerup', e => {
+document.addEventListener('pointerup', e => {
   if (e.pointerId !== activePointerId) return;
   
   const dy = e.clientY - startY;
