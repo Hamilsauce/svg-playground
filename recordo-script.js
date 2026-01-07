@@ -50,6 +50,36 @@ const radius = 150;
 // }
 
 // console.warn('ns', SVGSVGElem)
+console.warn('navigator.mediaDevices', navigator.mediaDevices.getDisplayMedia)
+
+
+const stream = await navigator.mediaDevices.getDisplayMedia({
+  video: {
+    frameRate: 60
+  },
+  audio: true // tab audio (browser-dependent)
+});
+
+const recorder = new MediaRecorder(stream, {
+  mimeType: "video/webm; codecs=vp9"
+});
+
+const chunks = [];
+recorder.ondataavailable = e => chunks.push(e.data);
+// recorder.start();
+
+// setTimeout(() => recorder.stop(),);
+
+recorder.onstop = () => {
+  const webmBlob = new Blob(chunks, { type: "video/webm" });
+  download(webmBlob, "recording.webm");
+};
+
+recorder.start();
+
+document.addEventListener('contextmenu', e => {
+  recorder.stop()
+})
 
 
 function animate() {
