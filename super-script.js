@@ -124,7 +124,6 @@ svg.addEventListener('click', e => {
   // makeRects.stop()
   animState.isRunning = !animState.isRunning
   // console.warn('animState.isRunning', animState.isRunning)
-  recorder.start();
   
   if (makeRects.isRunning) {
     
